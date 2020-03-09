@@ -1,0 +1,218 @@
+# Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License").
+# You may not use this file except in compliance with the License.
+# A copy of the License is located at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
+# permissions and limitations under the License.
+ 
+AWSTemplateFormatVersion:                         '2010-09-09'
+Description:                                      >
+  This template creates a Fabric client node, which will run the Fabric CLI and
+  interact with a Fabric network. The client node is an EC2 instance, and will be created in
+  its own VPC. Private VPC Endpoints will also be created, pointing to the Fabric service.
+Parameters:
+  KeyName:
+    Type:                                         AWS::EC2::KeyPair::KeyName
+    Description:                                  Name of an existing EC2 key pair to enable SSH access to the EC2 instance
+  BlockchainVpcEndpointServiceName:
+    Type:                                         String
+    Description:                                  Name of the Blockchain VPC Endpoint. Obtained from running 'aws managedblockchain get-network'
+ 
+Resources:
+  BlockchainFullhybridRootRole:
+    Type:                                         "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version:                                  "2012-10-17"
+        Statement:
+          -
+            Effect:                               "Allow"
+            Principal:
+              Service:
+                -                                 "ec2.amazonaws.com"
+            Action:
+              -                                   "sts:AssumeRole"
+      Path:                                       "/"
+      MaxSessionDuration:                         10800
+      Policies:
+        -
+          PolicyName:                             "root"
+          PolicyDocument:
+            Version:                              "2012-10-17"
+            Statement:
+              -
+                Effect:                           "Allow"
+                Action:                           "*"
+                Resource:                         "*"
+ 
+  BlockchainFullhybridRootInstanceProfile:
+    Type:                                         "AWS::IAM::InstanceProfile"
+    Properties:
+      Path:                                       "/"
+      Roles:
+        -
+          Ref:                                    "BlockchainFullhybridRootRole"
+ 
+  BlockchainFullhybridVPC:
+    Type:                                         AWS::EC2::VPC
+    Properties:
+      CidrBlock:                                  10.0.0.0/16
+      EnableDnsSupport:                           True
+      EnableDnsHostnames:                         True
+      InstanceTenancy:                            default
+      Tags:
+        - Key:                                    ReInventBlockchainFullhybrid
+          Value:                                  VPC
+ 
+  BlockchainFullhybridPublicSubnet:
+    Type:                                         AWS::EC2::Subnet
+    Properties:
+        VpcId:                                    !Ref BlockchainFullhybridVPC
+        MapPublicIpOnLaunch:                      false
+        CidrBlock:                                10.0.0.0/16
+        Tags:
+        - Key:                                    ReInventBlockchainFullhybrid
+          Value:                                  PublicSubnet
+ 
+  BlockchainFullhybridSecurityGroupBase:
+        Type:                                     AWS::EC2::SecurityGroup
+        Properties:
+          GroupDescription:                       Base Security Group
+          VpcId:                                  !Ref BlockchainFullhybridVPC
+          SecurityGroupIngress:
+          - IpProtocol:                           tcp
+            CidrIp:                               0.0.0.0/0
+            FromPort:                             22
+            ToPort:                               22
+          - IpProtocol:                           tcp
+            CidrIp:                               0.0.0.0/0
+            FromPort:                             0
+            ToPort:                               65535
+          Tags:
+          - Key:                                  ReInventBlockchainFullhybrid
+            Value:                                BaseSecurityGroup
+ 
+  BlockchainFullhybridSecurityGroupBaseIngress:
+    Type:                                         AWS::EC2::SecurityGroupIngress
+    Properties:
+      IpProtocol:                                 -1
+      FromPort:                                   -1
+      GroupId:                                    !GetAtt BlockchainFullhybridSecurityGroupBase.GroupId
+      ToPort:                                     -1
+      SourceSecurityGroupId:                      !GetAtt BlockchainFullhybridSecurityGroupBase.GroupId
+      Tags:
+      - Key:                                      ReInventBlockchainFullhybrid
+        Value:                                    BaseSecurityGroupIngress
+ 
+  BlockchainFullhybridInternetGateway:
+    Type:                                         "AWS::EC2::InternetGateway"
+    Properties:
+      Tags:
+      - Key:                                      ReInventBlockchainFullhybrid
+        Value:                                    InternetGateway
+ 
+  BlockchainFullhybridAttachGateway:
+    Type:                                         AWS::EC2::VPCGatewayAttachment
+    Properties:
+       VpcId:                                     !Ref BlockchainFullhybridVPC
+       InternetGatewayId:                         !Ref BlockchainFullhybridInternetGateway
+ 
+  BlockchainFullhybridRouteTable:
+    Type:                                         AWS::EC2::RouteTable
+    Properties:
+        VpcId:                                    !Ref BlockchainFullhybridVPC
+        Tags:
+          - Key:                                  ReInventBlockchainFullhybrid
+            Value:                                RouteTable
+ 
+  BlockchainFullhybridRoute:
+    Type:                                         AWS::EC2::Route
+    Properties:
+        RouteTableId:                             !Ref BlockchainFullhybridRouteTable
+        DestinationCidrBlock:                     0.0.0.0/0
+        GatewayId:                                !Ref BlockchainFullhybridInternetGateway
+ 
+  BlockchainFullhybridSubnetRouteTableAssociation:
+    Type:                                         AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+        SubnetId:                                 !Ref BlockchainFullhybridPublicSubnet
+        RouteTableId:                             !Ref BlockchainFullhybridRouteTable
+ 
+  BlockchainFullhybridVPCEndpoint:
+    Type:                                         AWS::EC2::VPCEndpoint
+    Properties:
+        VpcId:                                    !Ref BlockchainFullhybridVPC
+        PrivateDnsEnabled:                        True
+        ServiceName:                              !Ref BlockchainVpcEndpointServiceName
+        VpcEndpointType:                          Interface
+        SubnetIds:                                [!Ref BlockchainFullhybridPublicSubnet]
+        SecurityGroupIds:                         [!Ref BlockchainFullhybridSecurityGroupBase]
+ 
+  BlockchainFullhybridEC2:
+    Type:                                         AWS::EC2::Instance
+    Properties:
+        KeyName:                                  !Ref KeyName
+        ImageId:                                  'ami-0434d5878c6ad6d4c'
+        InstanceType:                             't2.small'
+        IamInstanceProfile:                       !Ref BlockchainFullhybridRootInstanceProfile
+        NetworkInterfaces:
+        - AssociatePublicIpAddress:               true
+          DeviceIndex:                            0
+          GroupSet:                               [!Ref BlockchainFullhybridSecurityGroupBase]
+          SubnetId:                               !Ref BlockchainFullhybridPublicSubnet
+        Tags:
+          - Key:                                  Name
+            Value:                                ManagedBlockchainFullhybridEC2ClientInstance
+ 
+  BlockchainFullhybridELB:
+    Type:                                         AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      SecurityGroups:                             [!Ref BlockchainFullhybridSecurityGroupBase]
+      Subnets:                                    [!Ref BlockchainFullhybridPublicSubnet]
+      Instances:
+        - !Ref                                    BlockchainFullhybridEC2
+      Listeners:
+        - LoadBalancerPort:                       '80'
+          InstancePort:                           '3000'
+          Protocol:                               TCP
+      HealthCheck:
+        Target:                                   HTTP:3000/health
+        HealthyThreshold:                         '3'
+        UnhealthyThreshold:                       '5'
+        Interval:                                 '10'
+        Timeout:                                  '5'
+      Tags:
+        - Key:                                    Name
+          Value:                                  ELB
+ 
+Outputs:
+  VPCID:
+    Description:                                  VPC ID
+    Value:
+      !Ref                                        BlockchainFullhybridVPC
+  PublicSubnetID:
+    Description:                                  Public Subnet ID
+    Value:
+      !Ref                                        BlockchainFullhybridPublicSubnet
+  SecurityGroupID:
+    Description:                                  Security Group ID
+    Value:
+      !GetAtt                                     BlockchainFullhybridSecurityGroupBase.GroupId
+  EC2URL:
+    Description:                                  Public DNS of the EC2 instance
+    Value:
+      !GetAtt                                     BlockchainFullhybridEC2.PublicDnsName
+  ELBDNS:
+    Description:                                  Public DNS of the ELB
+    Value:
+      !GetAtt                                     BlockchainFullhybridELB.DNSName
+  BlockchainVPCEndpoint:
+    Description:                                  VPC Endpoint ID
+    Value:
+      !Ref                                        BlockchainFullhybridVPCEndpoint
