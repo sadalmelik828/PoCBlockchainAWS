@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 export STACKNAME=fullhybrid-amb
 export NETWORKNAME=fullhybrid
@@ -16,14 +16,3 @@ export NODEID=nd-KVMKWKXD6VCSRG3XX24U5V5MTE
 export PEERENDPOINT=nd-kvmkwkxd6vcsrg3xx24u5v5mte.m-y46un7obkzb63hdnqiznfhvsy4.n-dwzkxskihnfefgeswdew4ws3ui.managedblockchain.us-east-1.amazonaws.com:30003
 export PEERSERVICEENDPOINTNOPORT=${PEERENDPOINT::-6}
 export PEEREVENTENDPOINT=nd-kvmkwkxd6vcsrg3xx24u5v5mte.m-y46un7obkzb63hdnqiznfhvsy4.n-dwzkxskihnfefgeswdew4ws3ui.managedblockchain.us-east-1.amazonaws.com:30004
-
-
-export MSP_PATH=/opt/home/admin-msp
-export MSP=$MEMBERID
-export ORDERER=$ORDERINGSERVICEENDPOINT
-export PEER=$PEERENDPOINT
-export CHANNEL=mychannel
-export CAFILE=/opt/home/managedblockchain-tls-chain.pem
-export CHAINCODENAME=mycc
-export CHAINCODEVERSION=v0
-export CHAINCODEDIR=github.com/chaincode_example02/go
