@@ -4,8 +4,7 @@ Metadata:
   LICENSE: Apache License Version 2.0
   AWS::CloudFormation::Interface:
     ParameterGroups:
-      -
-        Label:
+      - Label:
           default: Network configuration
         Parameters:
           - NetworkName
@@ -14,8 +13,7 @@ Metadata:
           - ThresholdPercentage
           - ThresholdComparator
           - ProposalDurationInHours
-      -
-        Label:
+      - Label:
           default: First member configuration
         Parameters:
           - MemberName
@@ -75,7 +73,7 @@ Parameters:
   Edition:
     Description: Setting that determines the number of peer nodes per member and the selection of instance types that can be used for them.
     ConstraintDescription: Must be STARTER or STANDARD
-    Default: STARTER
+    Default: STANDARD
     AllowedValues:
       - STARTER
       - STANDARD
@@ -89,13 +87,13 @@ Parameters:
   MemberDescription:
     Description: An optional description of your first member.
     Type: String
-    Default: First member 
+    Default: First member in blcochain network 
   MemberAdminUsername:
     Description: The user name of your first member's admin user.
     AllowedPattern: '^[0-9a-zA-Z/]+$'
     ConstraintDescription: AdminUsername must contain only uppercase and lowercase letters and numbers.
     Type: String
-    Default: admin
+    Default: memberadmin
   MemberAdminPassword:
     Description: The password of your first member's admin user.
     MinLength: 8
@@ -107,7 +105,7 @@ Parameters:
       contain ', ", \, /, @ or spaces. It must not exceed 32 characters in length.
     Type: String
     NoEcho: true
-    Default: AdminpwdFullHybrid1!
+    Default: FullHybrid!M3mb3rP0c
   ThresholdPercentage:
     Description: The percentage of favorable votes needed to approve a blockchain proposal.
     MinValue: 1
@@ -191,6 +189,15 @@ Resources:
         InstanceType: !Ref PeerNodeInstanceType
         AvailabilityZone: !Ref PeerNodeAvailabilityZone
     DependsOn: Member
+  MemberPeerNode2:
+    Type: "AWS::ManagedBlockchain::Node"
+    Properties:
+      NetworkId: !GetAtt Member.NetworkId
+      MemberId: !GetAtt Member.MemberId
+      NodeConfiguration:
+        InstanceType: !Ref PeerNodeInstanceType
+        AvailabilityZone: !Ref PeerNodeAvailabilityZone
+    DependsOn: Member
 Outputs:
   MemberId:
     Description: member id 
@@ -222,11 +229,6 @@ Outputs:
     Value: !Ref FrameworkVersion
     Export:
       Name: !Sub "${NetworkName}-FrameworkVersion"
-  MemberPeerNodeId:
-    Description: member peer node Id
-    Value: !GetAtt MemberPeerNode.NodeId
-    Export:
-      Name: !Sub "${NetworkName}-MemberPeerNodeId"
   MemberAdminUsername:
     Description: fabric admin user name
     Value: !Ref MemberAdminUsername
@@ -237,4 +239,14 @@ Outputs:
     Value: !Ref MemberAdminPassword
     Export:
       Name: !Sub "${NetworkName}-MemberAdminPassword"
+  MemberPeerNodeId:
+    Description: member peer node Id
+    Value: !GetAtt MemberPeerNode.NodeId
+    Export:
+      Name: !Sub "${NetworkName}-MemberPeerNodeId"
+  MemberPeerNode2Id:
+    Description: second member peer node Id
+    Value: !GetAtt MemberPeerNode2.NodeId
+    Export:
+      Name: !Sub "${NetworkName}-MemberPeerNode2Id"
   

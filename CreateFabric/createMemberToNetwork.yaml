@@ -1,0 +1,184 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Amazon Managed Blockchain. Creates a single member and peer node and join to network
+Metadata:
+  LICENSE: Apache License Version 2.0
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: Second member configuration
+        Parameters:
+          - NetworkName
+          - NetworkId
+          - InvitationId
+          - MemberName
+          - MemberDescription
+          - MemberAdminUsername
+          - MemberAdminPassword
+          - PeerNodeAvailabilityZone
+          - PeerNodeInstanceType
+    ParameterLabels:
+      NetworkName:
+        default: Network name
+      NetworkId:
+        default: Network Id
+      InvitationId:
+        default: Invitation Id
+      MemberName:
+        default: Member name
+      MemberDescription:
+        default: Member description
+      MemberAdminUsername:
+        default: Member admin username
+      MemberAdminPassword:
+        default: Member admin password
+      PeerNodeAvailabilityZone:
+        default: Peer node Availability Zone
+      PeerNodeInstanceType:
+        default: Instance type
+Parameters:
+  NetworkName:
+    Description: The name of your Amazon Managed Blockchain network.
+    AllowedPattern: "^[0-9a-zA-Z]+$"
+    ConstraintDescription: Network name must be alphanumeric and cannot contain spaces.
+    Type: String
+    Default: fullhybrid
+  NetworkId:
+    Description: The id of your Amazon Managed Blockchain network.
+    ConstraintDescription: Identifier of Network to join.
+    Type: String
+    Default: n-J7NT5J6KUFEWRDCR3AHFOH4KRI
+  InvitationId:
+    Description: The unique identifier of the invitation to join the network sent to the account that creates the member.
+    ConstraintDescription: Identifier of invitation for join.
+    Type: String
+    Default: ABCDE123
+  MemberName:
+    Description: The name of the second member in your Amazon Managed Blockchain network.
+    AllowedPattern: "^[0-9a-zA-Z]+$"
+    ConstraintDescription: MemberName must be alphanumeric.
+    Type: String
+    Default: member2
+  MemberDescription:
+    Description: An optional description of your member.
+    Type: String
+    Default: Other member in blockchain network 
+  MemberAdminUsername:
+    Description: The user name of your member's admin user.
+    AllowedPattern: '^[0-9a-zA-Z/]+$'
+    ConstraintDescription: AdminUsername must contain only uppercase and lowercase letters and numbers.
+    Type: String
+    Default: memberadmin2
+  MemberAdminPassword:
+    Description: The password of your member's admin user.
+    MinLength: 8
+    MaxLength: 32
+    AllowedPattern: "^(?!.*?['\"\\/ @])(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).*{8,32}$"
+    ConstraintDescription: >-
+      AdminPassword must be at least 8 characters long and must contain at least one
+      uppercase character, one lowercase character, and one digit. It must not
+      contain ', ", \, /, @ or spaces. It must not exceed 32 characters in length.
+    Type: String
+    NoEcho: true
+    Default: FullHybrid!M3mb3rTwo2p0c
+  PeerNodeAvailabilityZone:
+    Description: The Availability Zone for your first peer node.
+    Default: us-east-1a
+    Type: String
+  PeerNodeInstanceType:
+    Description: The type of compute instance to use for your peer nodes.
+    Default: bc.t3.small
+    Type: String
+    AllowedValues:
+      - bc.t3.small
+      - bc.t3.medium
+      - bc.t3.large
+      - bc.t3.xlarge
+      - bc.m5.large
+      - bc.m5.xlarge
+      - bc.m5.2xlarge
+      - bc.m5.4xlarge
+      - bc.c5.large
+      - bc.c5.xlarge
+      - bc.c5.2xlarge
+      - bc.c5.4xlarge
+    ConstraintDescription: >-
+      If Edition is STARTER, then this value must be bc.t3.small
+      or bc.t3.medium.
+
+Resources:
+  Member:
+    Type: "AWS::ManagedBlockchain::Member"
+    Properties:
+      MemberConfiguration:
+        Name: !Sub "member2-${NetworkName}"
+        Description: !Sub "member2-${NetworkName}-${AWS::AccountId}"
+        MemberFrameworkConfiguration:
+          MemberFabricConfiguration:
+            AdminUsername: !Ref MemberAdminUsername
+            AdminPassword: !Ref MemberAdminPassword
+      NetworkId: !Ref NetworkId
+      InvitationId: !Ref InvitationId
+  MemberPeerNode:
+    Type: "AWS::ManagedBlockchain::Node"
+    Properties:
+      NetworkId: !Ref NetworkId
+      MemberId: !GetAtt Member.MemberId
+      NodeConfiguration:
+        InstanceType: !Ref PeerNodeInstanceType
+        AvailabilityZone: !Ref PeerNodeAvailabilityZone
+    DependsOn: Member
+  MemberPeerNode2:
+    Type: "AWS::ManagedBlockchain::Node"
+    Properties:
+      NetworkId: !Ref NetworkId
+      MemberId: !GetAtt Member.MemberId
+      NodeConfiguration:
+        InstanceType: !Ref PeerNodeInstanceType
+        AvailabilityZone: !Ref PeerNodeAvailabilityZone
+    DependsOn: Member
+Outputs:
+  MemberId:
+    Description: member id 
+    Value: !GetAtt Member.MemberId
+    Export:
+      Name: !Sub "${MemberName}-${NetworkName}-MemberId"
+  MemberName:
+    Description: member name 
+    Value: !Sub "member-${NetworkName}"
+    Export:
+      Name: !Sub "${MemberName}-${NetworkName}-MemberName"
+  NetworkId:
+    Description: network id 
+    Value: !GetAtt Member.NetworkId
+    Export:
+      Name: !Sub "${MemberName}-${NetworkName}-NetworkId"
+  InvitationId:
+    Description: invitation id 
+    Value: !Ref InvitationId
+    Export:
+      Name: !Sub "${MemberName}-${NetworkName}-InvitationId"
+  NetworkName:
+    Description: network name 
+    Value: !Ref NetworkName
+    Export:
+      Name: !Sub "${MemberName}-${NetworkName}-NetworkName"
+  MemberAdminUsername:
+    Description: fabric admin user name
+    Value: !Ref MemberAdminUsername
+    Export:
+      Name: !Sub "${MemberName}-${NetworkName}-MemberAdminUsername"
+  MemberAdminPassword:
+    Description: fabric admin password
+    Value: !Ref MemberAdminPassword
+    Export:
+      Name: !Sub "${MemberName}-${NetworkName}-MemberAdminPassword"
+  MemberPeerNodeId:
+    Description: member peer node Id
+    Value: !GetAtt MemberPeerNode.NodeId
+    Export:
+      Name: !Sub "${MemberName}-${NetworkName}-MemberPeerNodeId"
+  MemberPeerNode2Id:
+    Description: member peer node 2 Id
+    Value: !GetAtt MemberPeerNode2.NodeId
+    Export:
+      Name: !Sub "${MemberName}-${NetworkName}-MemberPeerNode2Id"
