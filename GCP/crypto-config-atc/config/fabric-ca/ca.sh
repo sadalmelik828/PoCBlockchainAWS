@@ -93,16 +93,20 @@ cp ~/crypto-config/peerOrganizations/atc.catalyst.com/ca/ca.atc.catalyst.com-cer
 # Copia el certificado raíz del TLSCA al MSP de la organización
 cp ~/fabric-ca/server/tlsca.atc.catalyst.com/tlsca.atc.catalyst.com-cert.pem ~/crypto-config/peerOrganizations/atc.catalyst.com/msp/tlscacerts
 ## crear archivo config.yaml en la ruta ~/crypto-config/peerOrganizations/atc.catalyst.com/msp
+
+### El siguiente proceso se repite por cada identidad (peer, orderer o client) que quiera agregar ###
+
 # Crea directorio MSP de una identidad. En este caso un peer
 mkdir -p ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/{msp,tls}
+## crear archivo config.yaml en la ruta ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/msp
 # crea directorio para obtener el MSP de la identidad directo del Fabric-CA
 mkdir -p ~/fabric-ca/clients/ca/peers/peer0.atc.catalist.com
 ## Se debe copiar el archivo de configuración del Fabric-CA client en la ruta con las respectivas modificaciones
 # Exporta la variable de configuración del Fabric-CA client a la misma ruta del directorio recien creado
 export FABRIC_CA_CLIENT_HOME=~/fabric-ca/clients/ca/peers/peer0.atc.catalist.com
-# Inscribe el usuario peer en el Fabric-CA. El server retorna los certificados de dicha identidad en el directorio MSP
+# Inscribe la identidad en el Fabric-CA. El server retorna los certificados de dicha identidad en el directorio MSP
 fabric-ca-client enroll -u http://peer0.atc.catalyst.com:peer0ATCC4t4ly5t@atc.catalyst.com:7054
-# copia los certificados del MSP del peer en la estructura crypto-config
+# copia los certificados del MSP de la identidad en la estructura crypto-config
 cp -rf ~/fabric-ca/clients/ca/peers/peer0.atc.catalist.com/cacerts ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/msp
 cp -rf ~/fabric-ca/clients/ca/peers/peer0.atc.catalist.com/keystore ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/msp
 cp -rf ~/fabric-ca/clients/ca/peers/peer0.atc.catalist.com/signcerts ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/msp
@@ -110,3 +114,16 @@ cp -rf ~/fabric-ca/clients/ca/peers/peer0.atc.catalist.com/signcerts ~/crypto-co
 mkdir -p ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/msp/{admincerts,tlscacerts}
 # Copia el certificado raíz del TLSCA en el MSP de la identidad
 cp ~/crypto-config/peerOrganizations/atc.catalyst.com/msp/tlscacerts/tlsca.atc.catalyst.com-cert.pem ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/msp/tlscacerts
+# crea directorio para obtener el MSP de la identidad directo del TLSCA
+mkdir -p ~/fabric-ca/clients/tlsca/peers/peer0.atc.catalist.com
+## Se debe copiar el archivo de configuración del Fabric-CA client en la ruta con las respectivas modificaciones
+# Exporta la variable de configuración del TLSCA client a la misma ruta del directorio recien creado
+export FABRIC_CA_CLIENT_HOME=~/fabric-ca/clients/tlsca/peers/peer0.atc.catalist.com
+# Inscribe la identidad en el TLSCA. El server retorna los certificados de dicha identidad en el directorio MSP
+fabric-ca-client enroll -u http://peer0.atc.catalyst.com:peer0ATCC4t4ly5t@atc.catalyst.com:7054 --caname tlsca.atc.catalist.com
+## Copia el certificado de dicha identidad en el directorio tls
+cp ~/fabric-ca/clients/tlsca/peers/peer0.atc.catalist.com/*.pem ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/tls/server.crt
+# Copia la llave privada de dicha identidad en el directorio tls
+cp ~/fabric-ca/clients/tlsca/peers/peer0.atc.catalist.com/keystore/*_sk ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/tls/server.key
+# Copia el certificado raíz del TLSCA
+cp ~/crypto-config/peerOrganizations/atc.catalyst.com/msp/tlscacerts/tlsca.atc.catalyst.com-cert.pem ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/tls/ca.crt
