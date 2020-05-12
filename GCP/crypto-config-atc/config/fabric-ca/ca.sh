@@ -120,7 +120,7 @@ mkdir -p ~/fabric-ca/clients/tlsca/peers/peer0.atc.catalist.com
 # Exporta la variable de configuración del TLSCA client a la misma ruta del directorio recien creado
 export FABRIC_CA_CLIENT_HOME=~/fabric-ca/clients/tlsca/peers/peer0.atc.catalist.com
 # Inscribe la identidad en el TLSCA. El server retorna los certificados de dicha identidad en el directorio MSP
-fabric-ca-client enroll -u http://peer0.atc.catalyst.com:peer0ATCC4t4ly5t@atc.catalyst.com:7054 --caname tlsca.atc.catalist.com
+fabric-ca-client enroll -u http://peer0.atc.catalyst.com:peer0ATCC4t4ly5t@atc.catalyst.com:7054 --caname tlsca.atc.catalist.com --enrollment.profile tls
 ## Copia el certificado de dicha identidad en el directorio tls
 cp ~/fabric-ca/clients/tlsca/peers/peer0.atc.catalist.com/*.pem ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/tls/server.crt
 # Copia la llave privada de dicha identidad en el directorio tls
