@@ -14,7 +14,7 @@ sudo apt install golang
 echo 'export GOPATH=$HOME/go' | tee -a ~/.bashrc
 echo 'export GOBIN=$GOPATH/bin' | tee -a ~/.bashrc
 source ~/.bashrc
-# Descarga los ejemplos de fabric y los binarios
+# Descarga los ejemplos de fabric y los binarios excepto las imagenes docker
 curl -sSL https://bit.ly/2ysbOFE | bash -s -- -d
 # copia los binarios al path del sistema
 sudo cp ~/fabric-samples/bin/* /usr/local/bin/
@@ -23,27 +23,75 @@ go get -u github.com/hyperledger/fabric-ca/cmd/...
 # copia binarios de fabric-ca al path del sistema
 sudo cp $GOBIN/* /usr/local/bin/
 # Crea directorio de configuración del server Fabric-CA
-mkdir -p fabric-ca/server
-export FABRIC_CA_HOME=/home/fabric/fabric-ca/server
-## crear los archivo de configuración inicial del server con 2 instancias CA
-## Una para el CA de la organización y la otra para el TLSCA de la organización
+mkdir -p ~/fabric-ca/server
+export FABRIC_CA_HOME=~/fabric-ca/server
+## crear los archivo de configuración inicial del server
+fabric-ca-server init -b <user>:<passwd>
+## Se configurarán 2 CA, una para el CA de la organización y la otra para el TLSCA de la organización
+## Crear directorio para el TLSCA
+mkdir -p ~/fabric-ca/server/tlsca.atc.catalyst.com
+## Copiar la configuración de la CA por defecto y adecuar los valores según se requiera
+cp ~/fabric-ca/server/*.yaml ~/fabric-ca/server/tlsca.atc.catalyst.com
 ## No es necesario si ya se tiene los archivos de configuración previamente adecuados
 fabric-ca-server init -b admin:atc2020adm1n --cafiles /home/fabric/fabric-ca/server/tlsca.atc.catalyst.com/fabric-ca-server-config.yaml
-## modificar los valores de configuración en el archivo de configuración
+## Genera archivo de servicio para systemd del Fabric CA
+sudo cat > /etc/systemd/system/fabric-ca.service << EOF
+# Service definition for Hyperledger fabric-ca server
+[Unit]
+Description=hyperledger fabric-CA server - Certificate Authority for hyperledger fabric
+Documentation=https://hyperledger-fabric-ca.readthedocs.io/
+Wants=network-online.target
+After=network-online.target
+[Service]
+Type=simple
+Restart=on-failure
+Environment=FABRIC_LOGGING_SPEC=INFO
+Environment=FABRIC_CA_SERVER_HOME=/etc/hyperledger/fabric-ca-server
+RestartSec=1
+User=fabric
+ExecStart=/usr/local/bin/fabric-ca-server start -b <user>:<passwd> --cafiles /home/fabric/fabric-ca/server/tlsca.atc.catalyst.com/fabric-ca-server-config.yaml --cfg.identities.allowremove
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=fabric-ca
+[Install]
+WantedBy=multi-user.target
+EOF
+## Crear regla para redireccionar log del servicio
+sudo cat > /etc/rsyslog.d/80-fabric-ca.conf << EOF
+if $programname == 'fabric-ca' then /var/log/fabric-ca.log
+& stop
+EOF
+# crear archivo de log
+sudo touch /var/log/fabric-ca.log
+# Cambiar permisos de log
+sudo chown syslog:adm /var/log/fabric-ca.log
+# Reiniciar el servicio syslog
+sudo systemctl restart syslog
+## Activar el servicio
+sudo systemctl enable fabric-ca.service
+## Iniciar el servicio
 sudo systemctl start fabric-ca.service
+## Ver el estado del servicio
+sudo systemctl -l status fabric-ca.service
+
+### 
+### Generar certificados desde CA exclusiva para la organización
+###
 
 ## Desde otra VM o incluso en la misma crear si no existe
 mkdir -p ~/fabric-ca/clients/ca/admin
 # establecer la variable de entorno
 export FABRIC_CA_CLIENT_HOME=~/fabric-ca/clients/ca/admin
+## Se debe copiar el archivo de configuración del Fabric-CA client en la ruta con las respectivas modificaciones
 ## Si no se tiene una configuración inicial para el cliente de fabric-ca, se generara automatica con los valores por defecto
 ## Inscribir la identidad inicial, esto creará el directorio msp con los certificados de la identidad
 fabric-ca-client enroll -u http://admin:atc2020adm1n@atc.catalyst.com:7054
 ## registrar otro admin para propositos de configuración desde otra maquina
-fabric-ca-client register -d --id.name admin@atc.catalyst.com --id.secret adm1nC4t4ly5t --id.type admin --id.affiliation atc.catalyst --id.attrs '"hf.Registrar.Roles=peer,client",hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert'
-## Registar el o los peer que se requieran
+fabric-ca-client register -d --id.name admin@atc.catalyst.com --id.secret adm1nC4t4ly5t --id.type admin --id.affiliation atc.catalyst --id.attrs '"hf.Registrar.Roles=client",hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert'
+## Registrar orderers, peers o clients que se requieran
+# Registro de un peer
 fabric-ca-client register -d --id.name peer0.atc.catalyst.com --id.type peer --id.affiliation atc.catalyst --id.secret peer0ATCC4t4ly5t
-## Registrar el o los clientes que se requieran
+## Registro de un user
 fabric-ca-client register -d --id.name user1@atc.catalyst.com --id.secret user1C4t4ly5t --id.affiliation atc.catalyst --id.type client
 ## Desde la VM que va a ser peer, este comando genera el msp de dicho peer
 fabric-ca-client enroll -u http://peer0.atc.catalyst.com:peer0ATCC4t4ly5t@atc.catalyst.com:7054
@@ -53,13 +101,18 @@ fabric-ca-client enroll -u http://user1@atc.catalyst.com:user1C4t4ly5t@atc.catal
 fabric-ca-client enroll -u http://admin@atc.catalyst.com:adm1nC4t4ly5t@atc.catalyst.com:7054
 
 
-### Los pasos anteriores de inscripción y registro de identidades incluida la inicial, se puede repetir para el CA de TLS
-## Ademas de cambiar el valor de la variables de entorno FABRIC_CA_CLIENT_HOME, se debe añadir en los comandos la directiva --caname <nombre_del_ca>
+### 
+### Generar certificados TLS desde otra CA exclusiva para TLS
+###
 
+## Desde otra VM o incluso en la misma del Fabric-CA server crear si no existe
+mkdir -p ~/fabric-ca/clients/tlsca/admin
+# establecer la variable de entorno
+export FABRIC_CA_CLIENT_HOME=~/fabric-ca/clients/tlsca/admin
+## Se debe copiar el archivo de configuración del Fabric-CA client en la ruta con las respectivas modificaciones
 ### Registra la identidad inicial del TLSCA
 fabric-ca-client enroll -u http://admin:tlscaATC2020adm1n@atc.catalyst.com:7054 --caname tlsca.atc.catalyst.com
-
-### registrar los mismos usuarios del CA a excepción de los users - Esto se hace desde el server de Fabric-CA
+### registrar los mismos usuarios del CA a excepción de los users - Esto se hace desde el server de Fabric-CA o desde el nodo donde inscribio el admin
 ## Admin
 fabric-ca-client register -d --id.name admin@atc.catalyst.com --id.secret adm1nC4t4ly5t --id.type admin --id.affiliation atc.catalyst --id.attrs '"hf.Registrar.Roles=client",hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert' --caname tlsca.atc.catalyst.com
 # orderer0
@@ -73,7 +126,6 @@ fabric-ca-client enroll -d -u http://admin@atc.catalyst.com:adm1nC4t4ly5t@atc.ca
 fabric-ca-client enroll -d -u http://orderer0.atc.catalyst.com:orderer0ATCC4t4ly5tTLS@atc.catalyst.com:7054 --caname tlsca.atc.catalyst.com --enrollment.profile tls
 # peer0 - Esto se hace desde la VM del peer0
 fabric-ca-client enroll -d -u http://peer0.atc.catalyst.com:peer0ATCC4t4ly5tTLS@atc.catalyst.com:7054 --caname tlsca.atc.catalyst.com --enrollment.profile tls
-
 
 
 ###
