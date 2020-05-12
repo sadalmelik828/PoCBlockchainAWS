@@ -32,8 +32,6 @@ fabric-ca-server init -b <user>:<passwd>
 mkdir -p ~/fabric-ca/server/tlsca.atc.catalyst.com
 ## Copiar la configuración de la CA por defecto y adecuar los valores según se requiera
 cp ~/fabric-ca/server/*.yaml ~/fabric-ca/server/tlsca.atc.catalyst.com
-## No es necesario si ya se tiene los archivos de configuración previamente adecuados
-fabric-ca-server init -b admin:atc2020adm1n --cafiles /home/fabric/fabric-ca/server/tlsca.atc.catalyst.com/fabric-ca-server-config.yaml
 ## Genera archivo de servicio para systemd del Fabric CA
 sudo cat > /etc/systemd/system/fabric-ca.service << EOF
 # Service definition for Hyperledger fabric-ca server
