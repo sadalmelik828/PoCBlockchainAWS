@@ -44,7 +44,7 @@ After=network-online.target
 Type=simple
 Restart=on-failure
 Environment=FABRIC_LOGGING_SPEC=INFO
-Environment=FABRIC_CA_SERVER_HOME=/etc/hyperledger/fabric-ca-server
+Environment=FABRIC_CA_SERVER_HOME=/home/fabric/fabric-ca/server
 RestartSec=1
 User=fabric
 ExecStart=/usr/local/bin/fabric-ca-server start -b <user>:<passwd> --cafiles /home/fabric/fabric-ca/server/tlsca.atc.catalyst.com/fabric-ca-server-config.yaml --cfg.identities.allowremove
