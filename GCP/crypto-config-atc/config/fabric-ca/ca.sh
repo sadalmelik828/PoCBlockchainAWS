@@ -143,12 +143,43 @@ cp ~/crypto-config/peerOrganizations/atc.catalyst.com/ca/ca.atc.catalyst.com-cer
 # Copia el certificado raíz del TLSCA al MSP de la organización
 cp ~/fabric-ca/server/tlsca.atc.catalyst.com/tlsca.atc.catalyst.com-cert.pem ~/crypto-config/peerOrganizations/atc.catalyst.com/msp/tlscacerts
 ## crear archivo config.yaml en la ruta ~/crypto-config/peerOrganizations/atc.catalyst.com/msp
-
+cat > ~/crypto-config/peerOrganizations/atc.catalyst.com/msp/config.yaml << EOF
+NodeOUs:
+  Enable: true
+  ClientOUIdentifier:
+    Certificate: cacerts/ca.atc.catalyst.com-cert.pem
+    OrganizationalUnitIdentifier: client
+  PeerOUIdentifier:
+    Certificate: cacerts/ca.atc.catalyst.com-cert.pem
+    OrganizationalUnitIdentifier: peer
+  AdminOUIdentifier:
+    Certificate: cacerts/ca.atc.catalyst.com-cert.pem
+    OrganizationalUnitIdentifier: admin
+  OrdererOUIdentifier:
+    Certificate: cacerts/ca.atc.catalyst.com-cert.pem
+    OrganizationalUnitIdentifier: orderer
+EOF
 ### El siguiente proceso se repite por cada identidad (peer, orderer o client) que quiera agregar ###
 
 # Crea directorio MSP de una identidad. En este caso un peer
 mkdir -p ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/{msp,tls}
 ## crear archivo config.yaml en la ruta ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/msp
+cat > ~/crypto-config/peerOrganizations/atc.catalyst.com/peers/peer0.atc.catalyst.com/msp/config.yaml << EOF
+NodeOUs:
+  Enable: true
+  ClientOUIdentifier:
+    Certificate: cacerts/ca.atc.catalyst.com-cert.pem
+    OrganizationalUnitIdentifier: client
+  PeerOUIdentifier:
+    Certificate: cacerts/ca.atc.catalyst.com-cert.pem
+    OrganizationalUnitIdentifier: peer
+  AdminOUIdentifier:
+    Certificate: cacerts/ca.atc.catalyst.com-cert.pem
+    OrganizationalUnitIdentifier: admin
+  OrdererOUIdentifier:
+    Certificate: cacerts/ca.atc.catalyst.com-cert.pem
+    OrganizationalUnitIdentifier: orderer
+EOF
 # crea directorio para obtener el MSP de la identidad directo del Fabric-CA
 mkdir -p ~/fabric-ca/clients/ca/peers/peer0.atc.catalyst.com
 ## Se debe copiar el archivo de configuración del Fabric-CA client en la ruta con las respectivas modificaciones
