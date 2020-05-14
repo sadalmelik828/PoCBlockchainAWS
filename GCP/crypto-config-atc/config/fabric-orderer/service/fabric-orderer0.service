@@ -1,0 +1,17 @@
+# Service definition for Hyperledger fabric orderer
+[Unit]
+Description=hyperledger Fabric Orderer
+Documentation=https://hyperledger-fabric.readthedocs.io/en/release-2.0/orderer/ordering_service.html
+Wants=network-online.target
+After=network-online.target
+[Service]
+Type=simple
+Restart=on-failure
+Environment=FABRIC_LOGGING_SPEC=INFO
+Environment=FABRIC_CFG_PATH=/etc/hyperledger/fabric/config/atc.catalyst.com
+ExecStart=/usr/local/bin/orderer start
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=fabric-orderer0.atc.catalyst.com
+[Install]
+WantedBy=multi-user.target
