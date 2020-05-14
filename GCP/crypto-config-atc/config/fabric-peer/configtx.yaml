@@ -1,0 +1,31 @@
+################################################################################
+Organizations:
+    - &ATC
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: ATC
+
+        # ID to load the MSP definition as
+        ID: ATCMSP
+
+        MSPDir: msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('ATCMSP.admin', 'ATCMSP.peer', 'ATCMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('ATCMSP.admin', 'ATCMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('ATCMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('ATCMSP.peer')"
+        # AnchorPeers defines the location of peers which can be used for
+        # cross-org gossip communication. Note, this value is only encoded in
+        # the genesis block in the Application section context.
+        AnchorPeers:
+            - Host: peer0.atc.catalyst.com
+              Port: 11051

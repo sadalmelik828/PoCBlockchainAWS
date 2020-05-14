@@ -1,0 +1,19 @@
+# Service definition for Hyperledger fabric peer server
+[Unit]
+Description=hyperledger fabric-peer0-atc server - Peer0/ATC for hyperledger fabric
+Documentation=https://hyperledger-fabric.readthedocs.io/
+Wants=network-online.target
+After=network-online.target
+[Service]
+Type=simple
+Restart=on-failure
+Environment=FABRIC_LOGGING_SPEC=INFO
+Environment=FABRIC_CFG_PATH=/etc/hyperledger/fabric/config/peers/peer0.atc.catalyst.com
+Environment=CORE_LOGGING_PEER=info
+Environment=CORE_CHAINCODE_LOGGING_LEVEL=info
+ExecStart=/usr/local/bin/peer node start
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=fabric-peer0.atc.catalyst.com
+[Install]
+WantedBy=multi-user.target
