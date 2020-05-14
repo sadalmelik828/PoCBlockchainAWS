@@ -72,7 +72,7 @@ sudo systemctl start fabric-ca.service
 ## Ver el estado del servicio
 sudo systemctl -l status fabric-ca.service
 
-### 
+###
 ### Generar certificados desde CA exclusiva para la organización
 ###
 
@@ -87,8 +87,12 @@ fabric-ca-client enroll -u http://admin:atc2020adm1n@atc.catalyst.com:7054
 ## registrar otro admin para propositos de configuración desde otra maquina
 fabric-ca-client register -d --id.name admin@atc.catalyst.com --id.secret adm1nC4t4ly5t --id.type admin --id.affiliation atc.catalyst --id.attrs '"hf.Registrar.Roles=client",hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert'
 ## Registrar orderers, peers o clients que se requieran
+# orderer0
+fabric-ca-client register -d --id.name orderer0.atc.catalyst.com --id.type orderer --id.affiliation atc.catalyst --id.secret orderer0ATCC4t4ly5t
 # Registro de un peer
 fabric-ca-client register -d --id.name peer0.atc.catalyst.com --id.type peer --id.affiliation atc.catalyst --id.secret peer0ATCC4t4ly5t
+# peer1
+fabric-ca-client register -d --id.name peer1.atc.catalyst.com --id.type peer --id.affiliation atc.catalyst --id.secret peer1ATCC4t4ly5t
 ## Registro de un user
 fabric-ca-client register -d --id.name user1@atc.catalyst.com --id.secret user1C4t4ly5t --id.affiliation atc.catalyst --id.type client
 ## Desde la VM que va a ser peer, este comando genera el msp de dicho peer
@@ -97,6 +101,8 @@ fabric-ca-client enroll -u http://peer0.atc.catalyst.com:peer0ATCC4t4ly5t@atc.ca
 fabric-ca-client enroll -u http://user1@atc.catalyst.com:user1C4t4ly5t@atc.catalyst.com:7054
 ## los mismo para el admin
 fabric-ca-client enroll -u http://admin@atc.catalyst.com:adm1nC4t4ly5t@atc.catalyst.com:7054
+# orderer0
+fabric-ca-client enroll -u http://orderer0.atc.catalyst.com:orderer0ATCC4t4ly5t@atc.catalyst.com:7054
 
 
 ### 
@@ -117,6 +123,8 @@ fabric-ca-client register -d --id.name admin@atc.catalyst.com --id.secret adm1nC
 fabric-ca-client register -d --id.name orderer0.atc.catalyst.com --id.type orderer --id.affiliation atc.catalyst --id.secret orderer0ATCC4t4ly5tTLS --caname tlsca.atc.catalyst.com
 # peer0
 fabric-ca-client register -d --id.name peer0.atc.catalyst.com --id.type peer --id.affiliation atc.catalyst --id.secret peer0ATCC4t4ly5tTLS --caname tlsca.atc.catalyst.com
+# peer1
+fabric-ca-client register -d --id.name peer1.atc.catalyst.com --id.type peer --id.affiliation atc.catalyst --id.secret peer1ATCC4t4ly5tTLS --caname tlsca.atc.catalyst.com
 # Inscribir los usuarios para obtener los certificados - Esto se deberia hacer desde la VM del orderer0
 # admin
 fabric-ca-client enroll -d -u http://admin@atc.catalyst.com:adm1nC4t4ly5t@atc.catalyst.com:7054 --caname tlsca.atc.catalyst.com --enrollment.profile tls
