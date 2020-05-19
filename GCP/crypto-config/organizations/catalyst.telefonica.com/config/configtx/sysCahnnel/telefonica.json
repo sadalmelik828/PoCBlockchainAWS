@@ -1,0 +1,194 @@
+{
+	"groups": {},
+	"mod_policy": "Admins",
+	"policies": {
+		"Admins": {
+			"mod_policy": "Admins",
+			"policy": {
+				"type": 1,
+				"value": {
+					"identities": [
+						{
+							"principal": {
+								"msp_identifier": "TELEFONICAMSP",
+								"role": "ADMIN"
+							},
+							"principal_classification": "ROLE"
+						}
+					],
+					"rule": {
+						"n_out_of": {
+							"n": 1,
+							"rules": [
+								{
+									"signed_by": 0
+								}
+							]
+						}
+					},
+					"version": 0
+				}
+			},
+			"version": "0"
+		},
+		"Endorsement": {
+			"mod_policy": "Admins",
+			"policy": {
+				"type": 1,
+				"value": {
+					"identities": [
+						{
+							"principal": {
+								"msp_identifier": "TELEFONICAMSP",
+								"role": "PEER"
+							},
+							"principal_classification": "ROLE"
+						}
+					],
+					"rule": {
+						"n_out_of": {
+							"n": 1,
+							"rules": [
+								{
+									"signed_by": 0
+								}
+							]
+						}
+					},
+					"version": 0
+				}
+			},
+			"version": "0"
+		},
+		"Readers": {
+			"mod_policy": "Admins",
+			"policy": {
+				"type": 1,
+				"value": {
+					"identities": [
+						{
+							"principal": {
+								"msp_identifier": "TELEFONICAMSP",
+								"role": "ADMIN"
+							},
+							"principal_classification": "ROLE"
+						},
+						{
+							"principal": {
+								"msp_identifier": "TELEFONICAMSP",
+								"role": "PEER"
+							},
+							"principal_classification": "ROLE"
+						},
+						{
+							"principal": {
+								"msp_identifier": "TELEFONICAMSP",
+								"role": "CLIENT"
+							},
+							"principal_classification": "ROLE"
+						}
+					],
+					"rule": {
+						"n_out_of": {
+							"n": 1,
+							"rules": [
+								{
+									"signed_by": 0
+								},
+								{
+									"signed_by": 1
+								},
+								{
+									"signed_by": 2
+								}
+							]
+						}
+					},
+					"version": 0
+				}
+			},
+			"version": "0"
+		},
+		"Writers": {
+			"mod_policy": "Admins",
+			"policy": {
+				"type": 1,
+				"value": {
+					"identities": [
+						{
+							"principal": {
+								"msp_identifier": "TELEFONICAMSP",
+								"role": "ADMIN"
+							},
+							"principal_classification": "ROLE"
+						},
+						{
+							"principal": {
+								"msp_identifier": "TELEFONICAMSP",
+								"role": "CLIENT"
+							},
+							"principal_classification": "ROLE"
+						}
+					],
+					"rule": {
+						"n_out_of": {
+							"n": 1,
+							"rules": [
+								{
+									"signed_by": 0
+								},
+								{
+									"signed_by": 1
+								}
+							]
+						}
+					},
+					"version": 0
+				}
+			},
+			"version": "0"
+		}
+	},
+	"values": {
+		"Endpoints": {
+			"mod_policy": "Admins",
+			"value": {
+				"addresses": [
+					"orderer0.catalyst.telefonica.com:7050"
+				]
+			},
+			"version": "0"
+		},
+		"MSP": {
+			"mod_policy": "Admins",
+			"value": {
+				"config": {
+					"admins": [
+						"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURKRENDQXN1Z0F3SUJBZ0lVWFJvT0NtWjBZWGgzTUxUdmM3NHg4R2NDb2Qwd0NnWUlLb1pJemowRUF3SXcKZXpFTE1Ba0dBMVVFQmhNQ1EwOHhGREFTQmdOVkJBZ1RDMEp2WjI5MFlTQkVMa011TVE4d0RRWURWUVFIRXdaQwpiMmR2ZEdFeElEQWVCZ05WQkFvVEYyTmhkR0ZzZVhOMExuUmxiR1ZtYjI1cFkyRXVZMjl0TVNNd0lRWURWUVFECkV4cGpZUzVqWVhSaGJIbHpkQzUwWld4bFptOXVhV05oTG1OdmJUQWVGdzB5TURBMU1Ua3lNREF6TURCYUZ3MHkKTVRBMU1Ua3lNREE0TURCYU1HMHhDekFKQmdOVkJBWVRBa05QTVJRd0VnWURWUVFJRXd0Q2IyZHZkR0VnUkM1RApMakVQTUEwR0ExVUVCeE1HUW05bmIzUmhNUTR3REFZRFZRUUxFd1ZoWkcxcGJqRW5NQ1VHQTFVRUF3d2VZV1J0CmFXNHlRR05oZEdGc2VYTjBMblJsYkdWbWIyNXBZMkV1WTI5dE1Ga3dFd1lIS29aSXpqMENBUVlJS29aSXpqMEQKQVFjRFFnQUVRUzhuSDBZZTNOaFhjdmhPcTZja1VYakxrT0FQaWZKK3RhR0oyUWgvVzdnVW9jRGh2ZHpEKzdQaQpGdGJoYmdKbEpQR3MwSlNNQTRVOVdJMlVlRGtGVWFPQ0FUa3dnZ0UxTUE0R0ExVWREd0VCL3dRRUF3SUhnREFNCkJnTlZIUk1CQWY4RUFqQUFNQjBHQTFVZERnUVdCQlFablpVVjM0L3BNODNvYUNnZ0pHc2NuVXUrQmpBZkJnTlYKSFNNRUdEQVdnQlF4UW5xVGFmTk9CVDRwUVFwTjZuMm0zVFdwUXpCakJnTlZIUkVFWERCYWdoMXdaV1Z5TUM1agpZWFJoYkhsemRDNTBaV3hsWm05dWFXTmhMbU52YllJZ2IzSmtaWEpsY2pBdVkyRjBZV3g1YzNRdWRHVnNaV1p2CmJtbGpZUzVqYjIyQ0YyTmhkR0ZzZVhOMExuUmxiR1ZtYjI1cFkyRXVZMjl0TUhBR0NDb0RCQVVHQndnQkJHUjcKSW1GMGRISnpJanA3SW1obUxrRm1abWxzYVdGMGFXOXVJam9pSWl3aWFHWXVSVzV5YjJ4c2JXVnVkRWxFSWpvaQpZV1J0YVc0eVFHTmhkR0ZzZVhOMExuUmxiR1ZtYjI1cFkyRXVZMjl0SWl3aWFHWXVWSGx3WlNJNkltRmtiV2x1CkluMTlNQW9HQ0NxR1NNNDlCQU1DQTBjQU1FUUNJSGFrZytCVVlYTkRZeWQwaUwydkUyWCthS2N2WmNuU0xPNW4KeTZRN1FwMnBBaUFPNTFMSm1ZNTlXQ2JJWWIxbjRmSlNzQ3N2RUZlM2liTitKeHRSK0JjQmFnPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=",
+						"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURaVENDQXd5Z0F3SUJBZ0lVTldRLzF1RVFGa2dtNXZ1Uy9LMENKMk5MUzZFd0NnWUlLb1pJemowRUF3SXcKZXpFTE1Ba0dBMVVFQmhNQ1EwOHhGREFTQmdOVkJBZ1RDMEp2WjI5MFlTQkVMa011TVE4d0RRWURWUVFIRXdaQwpiMmR2ZEdFeElEQWVCZ05WQkFvVEYyTmhkR0ZzZVhOMExuUmxiR1ZtYjI1cFkyRXVZMjl0TVNNd0lRWURWUVFECkV4cGpZUzVqWVhSaGJIbHpkQzUwWld4bFptOXVhV05oTG1OdmJUQWVGdzB5TURBMU1UVXlNREUxTURCYUZ3MHkKTVRBMU1UVXlNREl3TURCYU1JR1FNUXN3Q1FZRFZRUUdFd0pEVHpFVU1CSUdBMVVFQ0JNTFFtOW5iM1JoSUVRdQpReTR4RHpBTkJnTlZCQWNUQmtKdloyOTBZVEV5TUF3R0ExVUVDeE1GWVdSdGFXNHdFUVlEVlFRTEV3cDBaV3hsClptOXVhV05oTUE4R0ExVUVDeE1JWTJGMFlXeDVjM1F4SmpBa0JnTlZCQU1NSFdGa2JXbHVRR05oZEdGc2VYTjAKTG5SbGJHVm1iMjVwWTJFdVkyOXRNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUUyV3pmQkNWdwpYY3dzbUFzRkVtRHhiaFFydmFGbWsrVmVxcE1ucUwrU1dkOXBTYStxc1U5UUw5UnVobFI1dFM3UHRJdGxGbW1vCmJobFhFazVIWDNPdGVLT0NBVll3Z2dGU01BNEdBMVVkRHdFQi93UUVBd0lIZ0RBTUJnTlZIUk1CQWY4RUFqQUEKTUIwR0ExVWREZ1FXQkJRRUlpN1lrbGtzRnIvS1NFVjlGZjQ2REs2RWN6QWZCZ05WSFNNRUdEQVdnQlF4UW5xVAphZk5PQlQ0cFFRcE42bjJtM1RXcFF6QmRCZ05WSFJFRVZqQlVnaGRqWVhRdFlYUmpMWEJsWlhJd0xXWmhZbkpwCll5MTJiWUlnYjNKa1pYSmxjakF1WTJGMFlXeDVjM1F1ZEdWc1pXWnZibWxqWVM1amIyMkNGMk5oZEdGc2VYTjAKTG5SbGJHVm1iMjVwWTJFdVkyOXRNSUdTQmdncUF3UUZCZ2NJQVFTQmhYc2lZWFIwY25NaU9uc2lZV1J0YVc0aQpPaUowY25WbElpd2lhR1l1UVdabWFXeHBZWFJwYjI0aU9pSjBaV3hsWm05dWFXTmhMbU5oZEdGc2VYTjBJaXdpCmFHWXVSVzV5YjJ4c2JXVnVkRWxFSWpvaVlXUnRhVzVBWTJGMFlXeDVjM1F1ZEdWc1pXWnZibWxqWVM1amIyMGkKTENKb1ppNVVlWEJsSWpvaVlXUnRhVzRpZlgwd0NnWUlLb1pJemowRUF3SURSd0F3UkFJZ0VUSHdjd1lnc1BpMgpkdW1kR3g1K1pQUnVlMnN0enRmeFQyc2FlbmtiWVA0Q0lDZmJhSWxQcFc1OE1UT2VKWHlYVndGc2Y2N1FUQjMxCkRhY0J4Mis3bUYxZAotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+					],
+					"crypto_config": {
+						"identity_identifier_hash_function": "SHA256",
+						"signature_hash_family": "SHA2"
+					},
+					"fabric_node_ous": null,
+					"intermediate_certs": [],
+					"name": "TELEFONICAMSP",
+					"organizational_unit_identifiers": [],
+					"revocation_list": [],
+					"root_certs": [
+						"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNQVENDQWVPZ0F3SUJBZ0lVZUR5cXJYWldOZ2VidXpKaWtmNkpkeCs4R2owd0NnWUlLb1pJemowRUF3SXcKZXpFTE1Ba0dBMVVFQmhNQ1EwOHhGREFTQmdOVkJBZ1RDMEp2WjI5MFlTQkVMa011TVE4d0RRWURWUVFIRXdaQwpiMmR2ZEdFeElEQWVCZ05WQkFvVEYyTmhkR0ZzZVhOMExuUmxiR1ZtYjI1cFkyRXVZMjl0TVNNd0lRWURWUVFECkV4cGpZUzVqWVhSaGJIbHpkQzUwWld4bFptOXVhV05oTG1OdmJUQWVGdzB5TURBMU1UVXhPREF3TURCYUZ3MHoKTlRBMU1USXhPREF3TURCYU1Ic3hDekFKQmdOVkJBWVRBa05QTVJRd0VnWURWUVFJRXd0Q2IyZHZkR0VnUkM1RApMakVQTUEwR0ExVUVCeE1HUW05bmIzUmhNU0F3SGdZRFZRUUtFeGRqWVhSaGJIbHpkQzUwWld4bFptOXVhV05oCkxtTnZiVEVqTUNFR0ExVUVBeE1hWTJFdVkyRjBZV3g1YzNRdWRHVnNaV1p2Ym1sallTNWpiMjB3V1RBVEJnY3EKaGtqT1BRSUJCZ2dxaGtqT1BRTUJCd05DQUFSbjA4MG5JcmhMWU5xaStIK0xWTEduRU1kWXhlcUc4QmV3aWRoSQppa2lScmFMcDhaOXc1S1pUd0tuYTlyVGFkSEtnYWFmNWRRZ2p4aXVHSWlhcGM3c3VvMFV3UXpBT0JnTlZIUThCCkFmOEVCQU1DQVFZd0VnWURWUjBUQVFIL0JBZ3dCZ0VCL3dJQkFUQWRCZ05WSFE0RUZnUVVNVUo2azJuelRnVSsKS1VFS1RlcDlwdDAxcVVNd0NnWUlLb1pJemowRUF3SURTQUF3UlFJaEFJVHBLYWlrbVB2eFBNZlpIYnIrWHBmKwpiTG5vVnJkRGJGUlpaNWk0dm4vZEFpQnFoUHY2MnJHTjIxczdJUGRSMG9RT2NFZUgzVG42a1ZNZ09Va0V4YUhrCkZRPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo="
+					],
+					"signing_identity": null,
+					"tls_intermediate_certs": [],
+					"tls_root_certs": [
+						"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNRakNDQWVtZ0F3SUJBZ0lVYXk0d01Yak1ScUxTRGF5Q2VvNEduWDNaSzljd0NnWUlLb1pJemowRUF3SXcKZmpFTE1Ba0dBMVVFQmhNQ1EwOHhGREFTQmdOVkJBZ1RDMEp2WjI5MFlTQkVMa011TVE4d0RRWURWUVFIRXdaQwpiMmR2ZEdFeElEQWVCZ05WQkFvVEYyTmhkR0ZzZVhOMExuUmxiR1ZtYjI1cFkyRXVZMjl0TVNZd0pBWURWUVFECkV4MTBiSE5qWVM1allYUmhiSGx6ZEM1MFpXeGxabTl1YVdOaExtTnZiVEFlRncweU1EQTFNVFV4T0RBd01EQmEKRncwek5UQTFNVEl4T0RBd01EQmFNSDR4Q3pBSkJnTlZCQVlUQWtOUE1SUXdFZ1lEVlFRSUV3dENiMmR2ZEdFZwpSQzVETGpFUE1BMEdBMVVFQnhNR1FtOW5iM1JoTVNBd0hnWURWUVFLRXhkallYUmhiSGx6ZEM1MFpXeGxabTl1CmFXTmhMbU52YlRFbU1DUUdBMVVFQXhNZGRHeHpZMkV1WTJGMFlXeDVjM1F1ZEdWc1pXWnZibWxqWVM1amIyMHcKV1RBVEJnY3Foa2pPUFFJQkJnZ3Foa2pPUFFNQkJ3TkNBQVRESGc0Z1gvT2xlWHhnV3JVYkVnUVdUeVQwcC9YNwpiRmF2NmllV3FXSzRxcjZEcDZhbGIvNnA1eUdsT0tuQ21sRWg4STZVVXUxUEYvZStGMGJuYUNYaW8wVXdRekFPCkJnTlZIUThCQWY4RUJBTUNBUVl3RWdZRFZSMFRBUUgvQkFnd0JnRUIvd0lCQVRBZEJnTlZIUTRFRmdRVUVOMTEKd1N0ZCt1VkQxT3IvcjZSNVZRQXJUdzB3Q2dZSUtvWkl6ajBFQXdJRFJ3QXdSQUlnZjRLdVRTRG44RHRkOElUTQpKakZObm5pWVBPKzA3Y09QYVVxMmJpQTFLZ2dDSUJkOU5YTS91eHUyMDVWb1NyalFZT0hSbTdiamxyTEgzeDRyCjRzT3VlMDhnCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+					]
+				},
+				"type": 0
+			},
+			"version": "0"
+		}
+	},
+	"version": "0"
+}
