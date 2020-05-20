@@ -138,7 +138,7 @@
 																			{
 																				"principal": {
 																					"msp_identifier": "TELEFONICAMSP",
-																					"role": "CLIENT"
+																					"role": "ORDERER"
 																				},
 																				"principal_classification": "ROLE"
 																			}
@@ -382,7 +382,7 @@
 																	{
 																		"principal": {
 																			"msp_identifier": "TELEFONICAMSP",
-																			"role": "CLIENT"
+																			"role": "ORDERER"
 																		},
 																		"principal_classification": "ROLE"
 																	}
@@ -653,15 +653,15 @@
 							"channel_id": "catalyst-sys-channel",
 							"epoch": "0",
 							"extension": null,
-							"timestamp": "2020-05-18T20:59:37Z",
+							"timestamp": "2020-05-20T17:02:33Z",
 							"tls_cert_hash": null,
-							"tx_id": "6511aafe40f74756828a38658c0f5c82ae6d1572d79a9db424e6fed45e20727e",
+							"tx_id": "319e6c191de9eeb0d677bff5df3291ad7b092c2f43607d0471d93ad54e8f81b9",
 							"type": 1,
 							"version": 1
 						},
 						"signature_header": {
 							"creator": null,
-							"nonce": "frS2V4wVvii3lKvCWXYznVDVkXC9aaxo"
+							"nonce": "8HbDOZfNi11uSHhux9oDwLWwjEE7K0GI"
 						}
 					}
 				},
@@ -670,7 +670,7 @@
 		]
 	},
 	"header": {
-		"data_hash": "Jq+Buhdx0p0oaWpLeGdcVSQlMdD/OZ14il2jgpqhOgw=",
+		"data_hash": "qC9uABDoJtQPH+j4X47uRqVppiXG3Rt4JDOL90zCqBc=",
 		"number": "0",
 		"previous_hash": null
 	},
