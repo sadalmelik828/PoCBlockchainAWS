@@ -49,7 +49,7 @@ Organizations:
                 # Rule: "OR('SampleOrg.admin', 'SampleOrg.peer', 'SampleOrg.client')"
             Writers:
                 Type: Signature
-                Rule: "OR('TELEFONICAMSP.admin', 'TELEFONICAMSP.client')"
+                Rule: "OR('TELEFONICAMSP.admin', 'TELEFONICAMSP.orderer')"
                 # If your MSP is configured with the new NodeOUs, you might
                 # want to use a more specific rule like the following:
                 # Rule: "OR('SampleOrg.admin', 'SampleOrg.client')"

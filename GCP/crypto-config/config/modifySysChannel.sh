@@ -25,7 +25,7 @@ export CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/msp/peers/peer0.catalyst.telefoni
 export CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/msp/peers/peer0.catalyst.telefonica.com/tls/ca.crt
 export ORDERER_CA_TLS_CERT=/etc/hyperledger/msp/orderers/orderer0.catalyst.telefonica.com/tls/ca.crt
 
-peer channel fetch config configtx/currentConfig.pb -o orderer0.catalyst.telefonica.com:7050 -c catalyst-sys-channel --tls --cafile $ORDERER_CA_TLS_CERT
+peer channel fetch config currentConfig.pb -o orderer0.catalyst.telefonica.com:7050 -c catalyst-sys-channel --tls --cafile $ORDERER_CA_TLS_CERT
 configtxlator proto_decode --input currentConfig.pb --type common.Block --output currentConfig.json
 cat currentConfig.json | jq . > currentConfig-formated.json
 jq .data.data[0].payload.data.config currentConfig-formated.json > currentConfig-extracted.json
