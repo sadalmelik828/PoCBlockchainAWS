@@ -125,7 +125,7 @@
 						{
 							"principal": {
 								"msp_identifier": "ATCMSP",
-								"role": "CLIENT"
+								"role": "ORDERER"
 							},
 							"principal_classification": "ROLE"
 						}
