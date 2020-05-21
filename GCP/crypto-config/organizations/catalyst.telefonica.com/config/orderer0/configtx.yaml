@@ -43,13 +43,13 @@ Organizations:
         Policies: &TELEFONICAPolicies
             Readers:
                 Type: Signature
-                Rule: "OR('TELEFONICAMSP.admin', 'TELEFONICAMSP.peer', 'TELEFONICAMSP.client')"
+                Rule: "OR('TELEFONICAMSP.admin', 'TELEFONICAMSP.peer', 'TELEFONICAMSP.client', 'TELEFONICAMSP.orderer')"
                 # If your MSP is configured with the new NodeOUs, you might
                 # want to use a more specific rule like the following:
                 # Rule: "OR('SampleOrg.admin', 'SampleOrg.peer', 'SampleOrg.client')"
             Writers:
                 Type: Signature
-                Rule: "OR('TELEFONICAMSP.admin', 'TELEFONICAMSP.client')"
+                Rule: "OR('TELEFONICAMSP.admin', 'TELEFONICAMSP.orderer')"
                 # If your MSP is configured with the new NodeOUs, you might
                 # want to use a more specific rule like the following:
                 # Rule: "OR('SampleOrg.admin', 'SampleOrg.client')"
@@ -64,6 +64,7 @@ Organizations:
         # and peers may to connect to to push transactions and receive blocks respectively.
         OrdererEndpoints:
             - "orderer0.catalyst.telefonica.com:7050"
+            - "orderer1.catalyst.telefonica.com:7050"
 
         # AnchorPeers defines the location of peers which can be used for
         # cross-org gossip communication. Note, this value is only encoded in
@@ -267,6 +268,7 @@ Orderer: &OrdererDefaults
     # to include the OrdererEndpoints item in your org definition
     Addresses:
         - orderer0.catalyst.telefonica.com:7050
+        - orderer1.catalyst.telefonica.com:7050
 
     # Batch Timeout: The amount of time to wait before creating a batch.
     BatchTimeout: 2s
@@ -330,6 +332,10 @@ Orderer: &OrdererDefaults
               Port: 7050
               ClientTLSCert: /etc/hyperledger/msp/orderers/orderer0.catalyst.telefonica.com/tls/server.crt
               ServerTLSCert: /etc/hyperledger/msp/orderers/orderer0.catalyst.telefonica.com/tls/server.crt
+            - Host: orderer1.catalyst.telefonica.com
+              Port: 7050
+              ClientTLSCert: /etc/hyperledger/msp/orderers/orderer1.catalyst.telefonica.com/tls/server.crt
+              ServerTLSCert: /etc/hyperledger/msp/orderers/orderer1.catalyst.telefonica.com/tls/server.crt
 
         # Options to be specified for all the etcd/raft nodes. The values here
         # are the defaults for all new channels and can be modified on a
