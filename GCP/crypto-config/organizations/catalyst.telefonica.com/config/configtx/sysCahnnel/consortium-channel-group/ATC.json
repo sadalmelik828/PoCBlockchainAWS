@@ -86,6 +86,13 @@
 								"role": "CLIENT"
 							},
 							"principal_classification": "ROLE"
+						},
+						{
+							"principal": {
+								"msp_identifier": "ATCMSP",
+								"role": "ORDERER"
+							},
+							"principal_classification": "ROLE"
 						}
 					],
 					"rule": {
@@ -100,6 +107,9 @@
 								},
 								{
 									"signed_by": 2
+								},
+								{
+									"signed_by": 3
 								}
 							]
 						}
@@ -150,15 +160,6 @@
 		}
 	},
 	"values": {
-		"Endpoints": {
-			"mod_policy": "Admins",
-			"value": {
-				"addresses": [
-					"orderer0.catalyst.atc.com:7050"
-				]
-			},
-			"version": "0"
-		},
 		"MSP": {
 			"mod_policy": "Admins",
 			"value": {

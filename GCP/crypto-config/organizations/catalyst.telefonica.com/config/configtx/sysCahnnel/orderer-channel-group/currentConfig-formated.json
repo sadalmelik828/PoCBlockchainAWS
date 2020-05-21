@@ -99,6 +99,13 @@
                                           "role": "CLIENT"
                                         },
                                         "principal_classification": "ROLE"
+                                      },
+                                      {
+                                        "principal": {
+                                          "msp_identifier": "TELEFONICAMSP",
+                                          "role": "ORDERER"
+                                        },
+                                        "principal_classification": "ROLE"
                                       }
                                     ],
                                     "rule": {
@@ -113,6 +120,9 @@
                                           },
                                           {
                                             "signed_by": 2
+                                          },
+                                          {
+                                            "signed_by": 3
                                           }
                                         ]
                                       }
@@ -138,7 +148,7 @@
                                       {
                                         "principal": {
                                           "msp_identifier": "TELEFONICAMSP",
-                                          "role": "CLIENT"
+                                          "role": "ORDERER"
                                         },
                                         "principal_classification": "ROLE"
                                       }
@@ -343,6 +353,13 @@
                                       "role": "CLIENT"
                                     },
                                     "principal_classification": "ROLE"
+                                  },
+                                  {
+                                    "principal": {
+                                      "msp_identifier": "TELEFONICAMSP",
+                                      "role": "ORDERER"
+                                    },
+                                    "principal_classification": "ROLE"
                                   }
                                 ],
                                 "rule": {
@@ -357,6 +374,9 @@
                                       },
                                       {
                                         "signed_by": 2
+                                      },
+                                      {
+                                        "signed_by": 3
                                       }
                                     ]
                                   }
@@ -382,7 +402,7 @@
                                   {
                                     "principal": {
                                       "msp_identifier": "TELEFONICAMSP",
-                                      "role": "CLIENT"
+                                      "role": "ORDERER"
                                     },
                                     "principal_classification": "ROLE"
                                   }
@@ -653,15 +673,15 @@
               "channel_id": "catalyst-sys-channel",
               "epoch": "0",
               "extension": null,
-              "timestamp": "2020-05-18T20:59:37Z",
+              "timestamp": "2020-05-20T23:29:54Z",
               "tls_cert_hash": null,
-              "tx_id": "6511aafe40f74756828a38658c0f5c82ae6d1572d79a9db424e6fed45e20727e",
+              "tx_id": "b721c3a6ac89cf966657e50446454b803896d511899af0f70e384e0ccf1d9e90",
               "type": 1,
               "version": 1
             },
             "signature_header": {
               "creator": null,
-              "nonce": "frS2V4wVvii3lKvCWXYznVDVkXC9aaxo"
+              "nonce": "nmA3ds/KyUPBLY6BXFocwDcct8z8t0c0"
             }
           }
         },
@@ -670,7 +690,7 @@
     ]
   },
   "header": {
-    "data_hash": "Jq+Buhdx0p0oaWpLeGdcVSQlMdD/OZ14il2jgpqhOgw=",
+    "data_hash": "Kq83C7Bi4A11fAODIek7P8UbfH+vLkxRfG91CTFtnNE=",
     "number": "0",
     "previous_hash": null
   },

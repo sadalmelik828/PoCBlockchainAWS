@@ -99,6 +99,13 @@
 																					"role": "CLIENT"
 																				},
 																				"principal_classification": "ROLE"
+																			},
+																			{
+																				"principal": {
+																					"msp_identifier": "TELEFONICAMSP",
+																					"role": "ORDERER"
+																				},
+																				"principal_classification": "ROLE"
 																			}
 																		],
 																		"rule": {
@@ -113,6 +120,9 @@
 																					},
 																					{
 																						"signed_by": 2
+																					},
+																					{
+																						"signed_by": 3
 																					}
 																				]
 																			}
@@ -343,6 +353,13 @@
 																			"role": "CLIENT"
 																		},
 																		"principal_classification": "ROLE"
+																	},
+																	{
+																		"principal": {
+																			"msp_identifier": "TELEFONICAMSP",
+																			"role": "ORDERER"
+																		},
+																		"principal_classification": "ROLE"
 																	}
 																],
 																"rule": {
@@ -357,6 +374,9 @@
 																			},
 																			{
 																				"signed_by": 2
+																			},
+																			{
+																				"signed_by": 3
 																			}
 																		]
 																	}
@@ -653,15 +673,15 @@
 							"channel_id": "catalyst-sys-channel",
 							"epoch": "0",
 							"extension": null,
-							"timestamp": "2020-05-20T17:02:33Z",
+							"timestamp": "2020-05-20T23:29:54Z",
 							"tls_cert_hash": null,
-							"tx_id": "319e6c191de9eeb0d677bff5df3291ad7b092c2f43607d0471d93ad54e8f81b9",
+							"tx_id": "b721c3a6ac89cf966657e50446454b803896d511899af0f70e384e0ccf1d9e90",
 							"type": 1,
 							"version": 1
 						},
 						"signature_header": {
 							"creator": null,
-							"nonce": "8HbDOZfNi11uSHhux9oDwLWwjEE7K0GI"
+							"nonce": "nmA3ds/KyUPBLY6BXFocwDcct8z8t0c0"
 						}
 					}
 				},
@@ -670,7 +690,7 @@
 		]
 	},
 	"header": {
-		"data_hash": "qC9uABDoJtQPH+j4X47uRqVppiXG3Rt4JDOL90zCqBc=",
+		"data_hash": "Kq83C7Bi4A11fAODIek7P8UbfH+vLkxRfG91CTFtnNE=",
 		"number": "0",
 		"previous_hash": null
 	},

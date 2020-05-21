@@ -141,6 +141,13 @@
                                     "role": "CLIENT"
                                   },
                                   "principal_classification": "ROLE"
+                                },
+                                {
+                                  "principal": {
+                                    "msp_identifier": "ATCMSP",
+                                    "role": "ORDERER"
+                                  },
+                                  "principal_classification": "ROLE"
                                 }
                               ],
                               "rule": {
@@ -155,6 +162,9 @@
                                     },
                                     {
                                       "signed_by": 2
+                                    },
+                                    {
+                                      "signed_by": 3
                                     }
                                   ]
                                 }

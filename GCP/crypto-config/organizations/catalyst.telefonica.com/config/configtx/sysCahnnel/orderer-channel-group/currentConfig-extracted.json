@@ -93,6 +93,13 @@
                               "role": "CLIENT"
                             },
                             "principal_classification": "ROLE"
+                          },
+                          {
+                            "principal": {
+                              "msp_identifier": "TELEFONICAMSP",
+                              "role": "ORDERER"
+                            },
+                            "principal_classification": "ROLE"
                           }
                         ],
                         "rule": {
@@ -107,6 +114,9 @@
                               },
                               {
                                 "signed_by": 2
+                              },
+                              {
+                                "signed_by": 3
                               }
                             ]
                           }
@@ -132,7 +142,7 @@
                           {
                             "principal": {
                               "msp_identifier": "TELEFONICAMSP",
-                              "role": "CLIENT"
+                              "role": "ORDERER"
                             },
                             "principal_classification": "ROLE"
                           }
@@ -337,6 +347,13 @@
                           "role": "CLIENT"
                         },
                         "principal_classification": "ROLE"
+                      },
+                      {
+                        "principal": {
+                          "msp_identifier": "TELEFONICAMSP",
+                          "role": "ORDERER"
+                        },
+                        "principal_classification": "ROLE"
                       }
                     ],
                     "rule": {
@@ -351,6 +368,9 @@
                           },
                           {
                             "signed_by": 2
+                          },
+                          {
+                            "signed_by": 3
                           }
                         ]
                       }
@@ -376,7 +396,7 @@
                       {
                         "principal": {
                           "msp_identifier": "TELEFONICAMSP",
-                          "role": "CLIENT"
+                          "role": "ORDERER"
                         },
                         "principal_classification": "ROLE"
                       }
