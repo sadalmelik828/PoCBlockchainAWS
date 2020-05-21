@@ -1,0 +1,29 @@
+{
+	"channel_id": "catalyst-sys-channel",
+	"isolated_data": {},
+	"read_set": {
+		"groups": {},
+		"mod_policy": "",
+		"policies": {},
+		"values": {},
+		"version": "0"
+	},
+	"write_set": {
+		"groups": {},
+		"mod_policy": "",
+		"policies": {},
+		"values": {
+			"OrdererAddresses": {
+				"mod_policy": "/Channel/Orderer/Admins",
+				"value": {
+					"addresses": [
+						"orderer0.catalyst.telefonica.com:7050",
+						"orderer0.catalyst.atc.com:7050"
+					]
+				},
+				"version": "1"
+			}
+		},
+		"version": "0"
+	}
+}
