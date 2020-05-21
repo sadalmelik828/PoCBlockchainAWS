@@ -30,9 +30,11 @@ configtxlator proto_decode --input currentConfig.pb --type common.Block --output
 cat currentConfig.json | jq . > currentConfig-formated.json
 jq .data.data[0].payload.data.config currentConfig-formated.json > currentConfig-extracted.json
 #  Orderer-channel-group
-jq -s ".[0] * {\"channel_group\":{\"groups\":{\"Orderer\":{\"groups\":{\"ATC\":.[1]}}}}}" currentConfig-extracted.json ATC_orderer0-formated.json > modifiedConfig-v1.json
+jq -s ".[0] * {\"channel_group\":{\"groups\":{\"Orderer\":{\"groups\":{\"ATC\":.[1]}}}}}" currentConfig-extracted.json ATC-formated.json > modifiedConfig-v1.json
 # Consortium-channel-group (NOTE:: before command remove tag Endpoints from ATC.json)
 jq -s ".[0] * {\"channel_group\":{\"groups\":{\"Consortiums\":{\"groups\":{\"SampleConsortium\":{\"groups\": {\"ATC\":.[1]}}}}}}}" currentConfig-extracted.json ATC-formated.json > modifiedConfig-v1.json
+# Consenters-channel-group
+jq ".channel_group.groups.Orderer.values.ConsensusType.value.metadata.consenters += [$(cat ATCconsenter.json)]" currentConfig-extracted.json > modifiedConfig-v1.json
 configtxlator proto_encode --input currentConfig-extracted.json --type common.Config --output currentConfig-extracted.pb
 configtxlator proto_encode --input modifiedConfig-v1.json --type common.Config --output modifiedConfig-v1.pb
 configtxlator compute_update --channel_id catalyst-sys-channel --original currentConfig-extracted.pb --updated modifiedConfig-v1.pb --output configUpdate-v1.pb

@@ -43,7 +43,7 @@ Organizations:
         Policies: &TELEFONICAPolicies
             Readers:
                 Type: Signature
-                Rule: "OR('TELEFONICAMSP.admin', 'TELEFONICAMSP.peer', 'TELEFONICAMSP.client')"
+                Rule: "OR('TELEFONICAMSP.admin', 'TELEFONICAMSP.peer', 'TELEFONICAMSP.client', 'TELEFONICAMSP.orderer')"
                 # If your MSP is configured with the new NodeOUs, you might
                 # want to use a more specific rule like the following:
                 # Rule: "OR('SampleOrg.admin', 'SampleOrg.peer', 'SampleOrg.client')"
