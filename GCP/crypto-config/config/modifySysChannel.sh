@@ -46,7 +46,7 @@ echo "{\"payload\":{\"header\":{\"channel_header\":{\"channel_id\":\"catalyst-sy
 configtxlator proto_encode --input configUpdate-v1-envelope.json --type common.Envelope --output configUpdate-v1-envelope.pb
 # Must be used on Consortium-channel-group, orderer-consenters-list and orderer-address-list by other org
 peer channel signconfigtx -f configUpdate-v1-envelope.pb
-peer channel update -f configUpdate-v1-envelope.pb -o orderer0.catalyst.telefonica.com:7050 --tls --cafile $ORDERER_CA_TLS_CERT -c catalyst-sys-channel
+peer channel update -f configUpdate-v1-envelope-signedATC.pb -o orderer0.catalyst.telefonica.com:7050 --tls --cafile $ORDERER_CA_TLS_CERT -c catalyst-sys-channel
 
 # Create file with information about orderer of other ORG for orderer-consenters-list
 echo "{\"client_tls_cert\":\"$(cat <PATH_CRT_TLS_ORDERER> | base64 -w 0)\",\"host\":\"orderer0.catalyst.atc.com\",\"port\":7050,\"server_tls_cert\":\"$(cat <PATH_CRT_TLS_ORDERER> | base64 -w 0)\"}" > ATCconsenter.json
