@@ -1,7 +1,9 @@
 #!/bin/sh
 
 ## Crea usuario fabric
-sudo useradd -m -d /home/fabric -s /bin/bash -p fabric fabric
+sudo useradd -m -d /home/fabric -s /bin/bash fabric
+# Asigna password
+sudo passwd fabric
 ## Asigna permisos de sudo al usuario
 sudo usermod -aG sudo fabric
 ## inicia sesión con usuario fabric
