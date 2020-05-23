@@ -1,0 +1,324 @@
+{
+  "channel_id": "catalyst-sys-channel",
+  "isolated_data": {},
+  "read_set": {
+    "groups": {
+      "Consortiums": {
+        "groups": {
+          "SampleConsortium": {
+            "groups": {
+              "ATC": {
+                "groups": {},
+                "mod_policy": "",
+                "policies": {},
+                "values": {},
+                "version": "0"
+              },
+              "TELEFONICA": {
+                "groups": {},
+                "mod_policy": "",
+                "policies": {},
+                "values": {},
+                "version": "0"
+              }
+            },
+            "mod_policy": "",
+            "policies": {},
+            "values": {},
+            "version": "1"
+          }
+        },
+        "mod_policy": "",
+        "policies": {},
+        "values": {},
+        "version": "0"
+      },
+      "Orderer": {
+        "groups": {
+          "ATC": {
+            "groups": {},
+            "mod_policy": "",
+            "policies": {},
+            "values": {},
+            "version": "0"
+          },
+          "TELEFONICA": {
+            "groups": {},
+            "mod_policy": "",
+            "policies": {},
+            "values": {},
+            "version": "0"
+          }
+        },
+        "mod_policy": "",
+        "policies": {},
+        "values": {},
+        "version": "1"
+      }
+    },
+    "mod_policy": "",
+    "policies": {},
+    "values": {},
+    "version": "0"
+  },
+  "write_set": {
+    "groups": {
+      "Consortiums": {
+        "groups": {
+          "SampleConsortium": {
+            "groups": {
+              "ATC": {
+                "groups": {},
+                "mod_policy": "",
+                "policies": {
+                  "Writers": {
+                    "mod_policy": "Admins",
+                    "policy": {
+                      "type": 1,
+                      "value": {
+                        "identities": [
+                          {
+                            "principal": {
+                              "msp_identifier": "ATCMSP",
+                              "role": "ADMIN"
+                            },
+                            "principal_classification": "ROLE"
+                          },
+                          {
+                            "principal": {
+                              "msp_identifier": "ATCMSP",
+                              "role": "CLIENT"
+                            },
+                            "principal_classification": "ROLE"
+                          },
+                          {
+                            "principal": {
+                              "msp_identifier": "ATCMSP",
+                              "role": "ORDERER"
+                            },
+                            "principal_classification": "ROLE"
+                          }
+                        ],
+                        "rule": {
+                          "n_out_of": {
+                            "n": 1,
+                            "rules": [
+                              {
+                                "signed_by": 0
+                              },
+                              {
+                                "signed_by": 1
+                              },
+                              {
+                                "signed_by": 2
+                              }
+                            ]
+                          }
+                        },
+                        "version": 0
+                      }
+                    },
+                    "version": "1"
+                  }
+                },
+                "values": {},
+                "version": "0"
+              },
+              "TELEFONICA": {
+                "groups": {},
+                "mod_policy": "",
+                "policies": {
+                  "Writers": {
+                    "mod_policy": "Admins",
+                    "policy": {
+                      "type": 1,
+                      "value": {
+                        "identities": [
+                          {
+                            "principal": {
+                              "msp_identifier": "TELEFONICAMSP",
+                              "role": "ADMIN"
+                            },
+                            "principal_classification": "ROLE"
+                          },
+                          {
+                            "principal": {
+                              "msp_identifier": "TELEFONICAMSP",
+                              "role": "CLIENT"
+                            },
+                            "principal_classification": "ROLE"
+                          },
+                          {
+                            "principal": {
+                              "msp_identifier": "TELEFONICAMSP",
+                              "role": "ORDERER"
+                            },
+                            "principal_classification": "ROLE"
+                          }
+                        ],
+                        "rule": {
+                          "n_out_of": {
+                            "n": 1,
+                            "rules": [
+                              {
+                                "signed_by": 0
+                              },
+                              {
+                                "signed_by": 1
+                              },
+                              {
+                                "signed_by": 2
+                              }
+                            ]
+                          }
+                        },
+                        "version": 0
+                      }
+                    },
+                    "version": "1"
+                  }
+                },
+                "values": {},
+                "version": "0"
+              }
+            },
+            "mod_policy": "",
+            "policies": {},
+            "values": {},
+            "version": "1"
+          }
+        },
+        "mod_policy": "",
+        "policies": {},
+        "values": {},
+        "version": "0"
+      },
+      "Orderer": {
+        "groups": {
+          "ATC": {
+            "groups": {},
+            "mod_policy": "",
+            "policies": {
+              "Writers": {
+                "mod_policy": "Admins",
+                "policy": {
+                  "type": 1,
+                  "value": {
+                    "identities": [
+                      {
+                        "principal": {
+                          "msp_identifier": "ATCMSP",
+                          "role": "ADMIN"
+                        },
+                        "principal_classification": "ROLE"
+                      },
+                      {
+                        "principal": {
+                          "msp_identifier": "ATCMSP",
+                          "role": "CLIENT"
+                        },
+                        "principal_classification": "ROLE"
+                      },
+                      {
+                        "principal": {
+                          "msp_identifier": "ATCMSP",
+                          "role": "ORDERER"
+                        },
+                        "principal_classification": "ROLE"
+                      }
+                    ],
+                    "rule": {
+                      "n_out_of": {
+                        "n": 1,
+                        "rules": [
+                          {
+                            "signed_by": 0
+                          },
+                          {
+                            "signed_by": 1
+                          },
+                          {
+                            "signed_by": 2
+                          }
+                        ]
+                      }
+                    },
+                    "version": 0
+                  }
+                },
+                "version": "1"
+              }
+            },
+            "values": {},
+            "version": "0"
+          },
+          "TELEFONICA": {
+            "groups": {},
+            "mod_policy": "",
+            "policies": {
+              "Writers": {
+                "mod_policy": "Admins",
+                "policy": {
+                  "type": 1,
+                  "value": {
+                    "identities": [
+                      {
+                        "principal": {
+                          "msp_identifier": "TELEFONICAMSP",
+                          "role": "ADMIN"
+                        },
+                        "principal_classification": "ROLE"
+                      },
+                      {
+                        "principal": {
+                          "msp_identifier": "TELEFONICAMSP",
+                          "role": "CLIENT"
+                        },
+                        "principal_classification": "ROLE"
+                      },
+                      {
+                        "principal": {
+                          "msp_identifier": "TELEFONICAMSP",
+                          "role": "ORDERER"
+                        },
+                        "principal_classification": "ROLE"
+                      }
+                    ],
+                    "rule": {
+                      "n_out_of": {
+                        "n": 1,
+                        "rules": [
+                          {
+                            "signed_by": 0
+                          },
+                          {
+                            "signed_by": 1
+                          },
+                          {
+                            "signed_by": 2
+                          }
+                        ]
+                      }
+                    },
+                    "version": 0
+                  }
+                },
+                "version": "1"
+              }
+            },
+            "values": {},
+            "version": "0"
+          }
+        },
+        "mod_policy": "",
+        "policies": {},
+        "values": {},
+        "version": "1"
+      }
+    },
+    "mod_policy": "",
+    "policies": {},
+    "values": {},
+    "version": "0"
+  }
+}
