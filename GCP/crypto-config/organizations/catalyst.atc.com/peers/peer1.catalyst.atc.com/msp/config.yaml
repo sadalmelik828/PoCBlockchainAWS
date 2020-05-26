@@ -11,4 +11,4 @@ NodeOUs:
     OrganizationalUnitIdentifier: admin
   OrdererOUIdentifier:
     Certificate: cacerts/ca.catalyst.atc.com-cert.pem
-    OrganizationalUnitIdentifier: orderer
+    OrganizationalUnitIdentifier: peer
