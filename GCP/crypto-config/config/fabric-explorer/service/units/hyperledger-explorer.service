@@ -1,0 +1,18 @@
+[Unit]
+Description=Service for Hyperledger Explorer
+Wants=network-online.target
+After=network-online.target
+Documentation=https://github.com/hyperledger/blockchain-explorer
+[Service]
+Type=simple
+User=fabric
+EnvironmentFile=~/hyperledger/service/env/explorer.env
+ExecStart=~/hyperledger/service/bin/hfexplorerctl start
+ExecStop=~/hyperledger/service/bin/hfexplorerctl stop
+ExecReload=~/hyperledger/service/bin/hfexplorerctl reload
+Restart=on-failure
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=hyperledger-explorer
+[Install]
+WantedBy=multi-user.target

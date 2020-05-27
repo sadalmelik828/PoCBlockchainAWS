@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# Description: Script que contiene los comandos de control 
+#	de la app Hyperledger Explorer
+# author: Roque Javier Ducuara Sosa <rducuara@everis.com>
+# Since: 2020
+# 
+
+## Definicion de comandos para controlar la app
+case "$1" in
+    start)
+        echo "Iniciando Hyperledger Explorer."
+        PROCESS=`ps -elf | grep -v grep | grep main.js | wc -l`
+        if [ ${PROCESS} -eq 0 ]; then
+            rm -rf /tmp/fabric-client-kvs_peerOrg*
+            node ${PATH_APP}/main.js name - hyperledger-explorer &
+        else
+            echo "Hyperledger Explorer ya ha sido iniciado."
+        fi
+        ;;
+    stop)
+        echo "Deteniendo Hyperledger Explorer."
+        PID=`ps aux  |  grep -v "awk"  |  awk '/name - hyperledger-explorer/ {print $2}'`
+        if [ ${PID} -gt 0 ]; then
+            kill -SIGTERM $PID
+        else
+            echo "No se puede detener el servicio Hyperledger Explorer porque no se encuentra el proceso."
+        fi
+        ;;
+    restart|reload)
+        $0 stop
+        $0 start
+        ;;
+    *)
+        echo "Para el uso del servicio de Hyperledger Explorer los comandos disponibles son: start|stop|restart|reload"
+        exit 1
+        ;;
+esac
+
+exit 0

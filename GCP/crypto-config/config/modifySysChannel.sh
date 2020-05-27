@@ -30,13 +30,13 @@ jq .data.data[0].payload.data.config currentConfig-formated.json > currentConfig
 ##
 #  Orderer-channel-group
 jq -s ".[0] * {\"channel_group\":{\"groups\":{\"Orderer\":{\"groups\":{\"ATC\":.[1]}}}}}" currentConfig-extracted.json ATC-formated.json > modifiedConfig-v1.json
-# Consortium-channel-group (NOTE:: before command remove tag Endpoints from ATC.json) (Only for sys channel)
+# Consortium-channel-group (NOTE:: before command remove tag Endpoints from org.json) (Only for sys channel)
 jq -s ".[0] * {\"channel_group\":{\"groups\":{\"Consortiums\":{\"groups\":{\"SampleConsortium\":{\"groups\": {\"ATC\":.[1]}}}}}}}" currentConfig-extracted.json ATC-formated.json > modifiedConfig-v1.json
-# Application-channel-group (Only for application channels)
+# Application-channel-group (NOTE:: before command remove tag Endpoints from org.json) (Only for application channels)
 jq -s ".[0] * {\"channel_group\":{\"groups\":{\"Application\":{\"groups\": {\"ATC\":.[1]}}}}}" currentConfig-extracted.json ATC-formated.json > modifiedConfig-v1.json
-# Consenters-channel-group
+# Consenters-channel-group (Only for sys channel)
 jq ".channel_group.groups.Orderer.values.ConsensusType.value.metadata.consenters += [$(cat ATCconsenter.json)]" currentConfig-extracted.json > modifiedConfig-v1.json
-# Orderer-address-list
+# Orderer-address-list (Only for sys channel)
 jq ".channel_group.values.OrdererAddresses.value.addresses += [\"orderer0.catalyst.atc.com:7050\"]" currentConfig-extracted.json > modifiedConfig-v1.json
 ##
 ## FIN
