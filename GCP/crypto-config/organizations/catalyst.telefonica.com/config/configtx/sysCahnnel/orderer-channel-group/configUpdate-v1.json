@@ -177,6 +177,13 @@
 													"role": "CLIENT"
 												},
 												"principal_classification": "ROLE"
+											},
+											{
+												"principal": {
+													"msp_identifier": "NTTMSP",
+													"role": "ORDERER"
+												},
+												"principal_classification": "ROLE"
 											}
 										],
 										"rule": {
@@ -191,6 +198,9 @@
 													},
 													{
 														"signed_by": 2
+													},
+													{
+														"signed_by": 3
 													}
 												]
 											}
@@ -219,6 +229,13 @@
 													"role": "CLIENT"
 												},
 												"principal_classification": "ROLE"
+											},
+											{
+												"principal": {
+													"msp_identifier": "NTTMSP",
+													"role": "ORDERER"
+												},
+												"principal_classification": "ROLE"
 											}
 										],
 										"rule": {
@@ -230,6 +247,9 @@
 													},
 													{
 														"signed_by": 1
+													},
+													{
+														"signed_by": 2
 													}
 												]
 											}
