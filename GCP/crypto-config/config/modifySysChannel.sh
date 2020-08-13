@@ -57,9 +57,9 @@ echo "{\"payload\":{\"header\":{\"channel_header\":{\"channel_id\":\"catalyst-sy
 configtxlator proto_encode --input configUpdate-v1-envelope.json --type common.Envelope --output configUpdate-v1-envelope.pb
 ##
 ## El siguiente comando es para firmar el bloque de cambios del canal. Esa tarea la debe hacer un admin de la organización que se incluye en el canal.
-## Debe ser usado solo en los siguientes pasos:
+## - Orderer-channel-group - Este se debe usar a partir de la inclusión de la tercera organización y se debe obtener la mayoria de firmas
 ## - consortium-channel-group
-## - consenters-channel-group 
+## - consenters-channel-group
 ## - orderer-address-list
 peer channel signconfigtx -f configUpdate-v1-envelope.pb
 # Firmar y actualizar el bloque de configuración del canal
