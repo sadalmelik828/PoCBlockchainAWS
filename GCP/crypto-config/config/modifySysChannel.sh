@@ -66,7 +66,7 @@ peer channel signconfigtx -f configUpdate-v1-envelope.pb
 peer channel update -f configUpdate-v1-envelope-signedATC.pb -o orderer0.catalyst.telefonica.com:7050 --tls --cafile $ORDERER_CA_TLS_CERT -c catalyst-sys-channel
 
 # Crear archivo con información de o los orderers de la organización a incluir en el canal para el paso de consenters-channel-group
-echo "{\"client_tls_cert\":\"$(cat <PATH_CRT_TLS_ORDERER> | base64 -w 0)\",\"host\":\"orderer0.catalyst.ntt.com\",\"port\":7050,\"server_tls_cert\":\"$(cat <PATH_CRT_TLS_ORDERER> | base64 -w 0)\"}" > NTTconsenter.json
+echo "{\"client_tls_cert\":\"$(cat <PATH_SERVER_CRT_TLS_ORDERER> | base64 -w 0)\",\"host\":\"orderer0.catalyst.ntt.com\",\"port\":7050,\"server_tls_cert\":\"$(cat <PATH_SERVER_CRT_TLS_ORDERER> | base64 -w 0)\"}" > NTTconsenter.json
 
 
 ## Get updated config

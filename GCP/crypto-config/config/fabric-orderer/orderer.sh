@@ -32,7 +32,7 @@ fabric-ca-client enroll -u http://orderer0.catalyst.telefonica.com:orderer0C4t4l
 # Crear directorio de inscripción en Fabric-CA para TLS
 mkdir -p ~/fabric-ca/clients/ca/orderers/orderer0.catalyst.telefonica.com
 # Exportar variable para recibir MSP - TLS
-export FABRIC_CA_CLIENT_HOME=~/fabric-ca/clients/ca/orderers/orderer0.catalyst.telefonica.com
+export FABRIC_CA_CLIENT_HOME=~/fabric-ca/clients/tlsca/orderers/orderer0.catalyst.telefonica.com
 # Inscribirse en el Fabric-CA de TLS
 fabric-ca-client enroll -u http://orderer0.catalyst.telefonica.com:orderer0C4t4ly5tT3l3f0n1ca@catalyst.telefonica.com:7054 --caname tlsca.catalyst.telefonica.com --enrollment.profile tls
 # crear directorio para almacenar los archivos de configuración y MSP
