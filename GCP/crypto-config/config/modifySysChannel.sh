@@ -29,7 +29,7 @@ jq .data.data[0].payload.data.config currentConfig-formated.json > currentConfig
 ## - Información de los orderers de la otra organización
 ##
 #  Orderer-channel-group
-jq -s ".[0] * {\"channel_group\":{\"groups\":{\"Orderer\":{\"groups\":{\"ATC\":.[1]}}}}}" currentConfig-extracted.json ATC-formated.json > modifiedConfig-v1.json
+jq -s ".[0] * {\"channel_group\":{\"groups\":{\"Orderer\":{\"groups\":{\"NTT\":.[1]}}}}}" currentConfig-extracted.json NTT-formated.json > modifiedConfig-v1.json
 # Consortium-channel-group (NOTE:: before command remove tag Endpoints from org.json) (Only for sys channel)
 jq -s ".[0] * {\"channel_group\":{\"groups\":{\"Consortiums\":{\"groups\":{\"SampleConsortium\":{\"groups\": {\"NTT\":.[1]}}}}}}}" currentConfig-extracted.json NTT-formated.json > modifiedConfig-v1.json
 # Application-channel-group (NOTE:: before command remove tag Endpoints from org.json) (Only for application channels)
