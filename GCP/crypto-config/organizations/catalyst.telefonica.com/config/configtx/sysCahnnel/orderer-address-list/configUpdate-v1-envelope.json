@@ -28,10 +28,11 @@
                 "addresses": [
                   "orderer0.catalyst.telefonica.com:7050",
                   "orderer1.catalyst.telefonica.com:7050",
-                  "orderer0.catalyst.atc.com:7050"
+                  "orderer0.catalyst.atc.com:7050",
+                  "orderer0.catalyst.ntt.com:7050"
                 ]
               },
-              "version": "1"
+              "version": "2"
             }
           },
           "version": "0"
