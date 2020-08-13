@@ -56,7 +56,7 @@ echo "{\"payload\":{\"header\":{\"channel_header\":{\"channel_id\":\"catalyst-sy
 # Convertir cambios actuales a bloque
 configtxlator proto_encode --input configUpdate-v1-envelope.json --type common.Envelope --output configUpdate-v1-envelope.pb
 ##
-## El siguiente comando es para firmar el bloque de cambios del canal. Esa tarea la debe hacer un admin de la organización que se incluye en el canal.
+## El siguiente comando es para firmar el bloque de cambios del canal. Esa tarea la debe hacer un admin de las organizaciones ya incluidas o la organización se va a incluir en el canal en caso de que sea la segunda organización.
 ## - Orderer-channel-group - Este se debe usar a partir de la inclusión de la tercera organización y se debe obtener la mayoria de firmas
 ## - consortium-channel-group
 ## - consenters-channel-group
@@ -66,7 +66,7 @@ peer channel signconfigtx -f configUpdate-v1-envelope.pb
 peer channel update -f configUpdate-v1-envelope-signedATC.pb -o orderer0.catalyst.telefonica.com:7050 --tls --cafile $ORDERER_CA_TLS_CERT -c catalyst-sys-channel
 
 # Crear archivo con información de o los orderers de la organización a incluir en el canal para el paso de consenters-channel-group
-echo "{\"client_tls_cert\":\"$(cat <PATH_CRT_TLS_ORDERER> | base64 -w 0)\",\"host\":\"orderer0.catalyst.atc.com\",\"port\":7050,\"server_tls_cert\":\"$(cat <PATH_CRT_TLS_ORDERER> | base64 -w 0)\"}" > ATCconsenter.json
+echo "{\"client_tls_cert\":\"$(cat <PATH_CRT_TLS_ORDERER> | base64 -w 0)\",\"host\":\"orderer0.catalyst.ntt.com\",\"port\":7050,\"server_tls_cert\":\"$(cat <PATH_CRT_TLS_ORDERER> | base64 -w 0)\"}" > NTTconsenter.json
 
 
 ## Get updated config
@@ -74,3 +74,8 @@ peer channel fetch config updatedConfig.pb -o orderer0.catalyst.telefonica.com:7
 configtxlator proto_decode --input updatedConfig.pb --type common.Block --output updatedConfig.json
 cat updatedConfig.json | jq . > updatedConfig-formated.json
 jq .data.data[0].payload.data.config updatedConfig-formated.json > updatedConfig-extracted.json
+
+## Iniciar el orderer con el bloque resultante del siguiente comando:
+## Este proceso se realiza justo despues del paso consenters-channel-group
+## Antes de iniciar el orderer de la nueva organización, se debe asegurar que todos los orderers tengan visibilidad entre ellos
+cp updatedConfig.pb latestConfigSysChannel.block
