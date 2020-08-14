@@ -1,0 +1,6 @@
+{
+  "client_tls_cert": "certificadofalse",
+  "host": "orderer0.catalyst.ficticio.com",
+  "port": 7050,
+  "server_tls_cert": "certificadofalse"
+}

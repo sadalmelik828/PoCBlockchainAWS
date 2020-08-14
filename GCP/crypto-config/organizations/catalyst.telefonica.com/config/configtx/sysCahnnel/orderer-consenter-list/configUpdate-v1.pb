@@ -1,9 +1,9 @@
 
 catalyst-sys-channel
-Orderer÷\ô\
-Ordererè\ã\
-ConsensusTypeÑ\Ä\
-etcdraft·\
+Orderer¸]µ]
+Orderer©]¤]
+ConsensusType’]…]
+etcdraftø\
 ¥
  orderer0.catalyst.telefonica.comŠ7ý	-----BEGIN CERTIFICATE-----
 MIIDgjCCAyigAwIBAgIUbaZPQgDGu4IATyoazu/LcIHZzPgwCgYIKoZIzj0EAwIw
@@ -207,6 +207,8 @@ Y29tIiwiaGYuVHlwZSI6Im9yZGVyZXIifX0wCgYIKoZIzj0EAwIDSAAwRQIhAOcN
 s9i2hj+GmyiFIOwBq7RtSnT0lYqyBvFgb06cD813AiAiJrm1xQ9rCDFmRcU/1jxt
 cIIJTkms2i2fTcFtFH2SFQ==
 -----END CERTIFICATE-----
-
+
+?
+orderer0.catalyst.ficticio.comŠ7qêí‰øœiÚj["qêí‰øœiÚj[
 500ms
  (€€€Admins
